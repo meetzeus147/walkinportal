@@ -1,0 +1,67 @@
+<div class="flex-class">
+    <div class="personal-info-div">
+        <div class="personal-info">
+            <div class="data-div">
+                <div class="label">First Name*</div>
+                <input type="text" class="text-input" placeholder="Enter First Name">
+            </div>
+            <div class="data-div">
+                <div class="label">Last Name*</div>
+                <input type="text" class="text-input" placeholder="Enter Last Name">
+            </div>
+            <div class="data-div">
+                <div class="label">Email*</div>
+                <input type="text" class="text-input" placeholder="Enter Email">
+            </div>
+            <div class="data-div">
+                <div class="label">Phone Number*</div>
+                <input type="tel" class="phone-input">
+            </div>
+            <label class="data-div upload-resume-div" (change)="uploadResume($event)" for="resume-input">
+                <img src="../../../assets/svgs/Upload_24dp.svg" alt="upload" class="upload-svg">
+                <input type="file" class="resume-input" accept="application/pdf" id="resume-input">
+                <div class="upload-label">Upload Resume</div>
+                <input class="file-name" placeholder="{{fileName}}" disabled>
+            </label>
+            <div class="data-div">
+                <div class="label">Enter Portfolio URL(if any)</div>
+                <input type="text" class="text-input" placeholder="Enter URL">
+            </div>
+            <div class="data-div">
+                <div class="label">Preferred Job Roles*</div>
+                <div class="roles-options">
+                    <input type="checkbox" id="instructionalDesigner" class="roles-checkbox">
+                    <label for="instructionalDesigner" class="roles-label">Instructional Designer</label><br>
+                </div>
+                <div class="roles-options">
+                    <input type="checkbox" id="softwareEngineer" class="roles-checkbox">
+                    <label for="softwareEngineer" class="roles-label">Software Engineer</label><br>
+                </div>
+                <div class="roles-options">
+                    <input type="checkbox" id="softwareQualityEngineer" class="roles-checkbox">
+                    <label for="softwareQualityEngineer" class="roles-label">Software Quality Engineer</label>
+                </div>
+            </div>
+            <div class="data-div">
+                <div class="label">If You Are Registering Via A Referral, Please Mention Full Name Of The Employee Who
+                    Referred You</div>
+                <input type="text" class="text-input">
+            </div>
+            <div class="sendmeupdates-div">
+                <input type="checkbox" id="sendmeupdates" class="updates-checkbox">
+                <label for="sendmeupdates" class="updates-label">Send me job related updates via mail</label>
+            </div>
+        </div>
+        <div class="photo-upload">
+            <div class="flex-div">
+                <img [src]=profilePhotoSrc alt="default-profile-photo" class="profile-photo">
+                <label for="photo-input" class="photo-input-label" (change)="uploadProfilePhoto($event)">
+                    <input type="file" class="photo-input" id="photo-input" accept="image/jpeg,image/jpg,image/png">
+                    <div class="upload-label">UPLOAD DISPLAY PICTURE</div>
+                </label>
+                <div class="input-desc">Max. image size: 5 MB</div>
+            </div>
+        </div>
+    </div>
+    <button class="next-button">NEXT</button>
+</div>

@@ -1,0 +1,18 @@
+$headerbackground: #25313F;
+$bordercolor: #3AC7EC;
+$white: #ffffff;
+$fontsize20: 20px;
+
+.header {
+    display: flex;
+    border-bottom: 2px solid;
+    border-color: $bordercolor;
+    background-image:url('../../assets/images/header\ pattern\ image.png');
+    height: 56px;
+
+    .header-title-svg {
+        color: $white;
+        font-size: $fontsize20;
+        margin: auto 30px;
+    }
+}

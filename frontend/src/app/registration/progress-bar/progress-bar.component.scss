@@ -1,0 +1,51 @@
+$progressbarbgcolor: #ffffff;
+$completeprogresscolor: #3FD28B;
+$incompleteprogresscolor: #757575;
+$textcolor: #222222;
+$progressline: #00000033;
+
+.reg-progress-bar{
+    margin: 24px;
+    padding: 12px 16px;
+    background-color: $progressbarbgcolor;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 2px;
+
+    .progress-div{
+        display: flex;
+        align-items: center;
+
+        .complete{
+            background-color: $completeprogresscolor;
+        }
+    
+        .incomplete{
+            background-color: $incompleteprogresscolor;
+        }
+    
+        .progress-numbers-circle{
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            display: flex;
+    
+            .progress-numbers{
+                margin: auto auto;
+            }
+        }
+    
+        .progress-labels{
+            color: $textcolor;
+            margin-left: 8px;
+        }
+    }
+
+    .progress-line{
+        height: 1px;
+        background-color: $progressline;
+        flex: 1;
+        margin: 8px;
+    }
+}
