@@ -1,0 +1,80 @@
+$bgcolor: #FFFFFF;
+$labelcolor: #666666;
+$seperatorcolor: #6666663D;
+$inputcolor: #222222;
+$accentcolor: #1F7A54;
+$buttonbgcolor: #3FD28B;
+$buttoncolor: #25313F;
+$buttonshadow: 0px 3px 5px #0000003D;
+$divshadow: 0px 4px 6px #0000003D;
+$dropdowntitlecolor: #DBEFFF;
+$fontsize12: 12px;
+$fontsize14: 14px;
+$fontsize16: 16px;
+$fontsize20: 20px;
+$fontsize22: 22px;
+$fontsize24: 24px;
+
+.role-desc {
+    background-color: $bgcolor;
+    box-shadow: $divshadow;
+
+    .role-desc-header {
+        background-color: $dropdowntitlecolor;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .role-title {
+            font-size: $fontsize16;
+            padding: 16px;
+        }
+
+        .expand-icon {
+            margin-left: auto;
+            padding: 16px 16px;
+            border-left: 1px solid $seperatorcolor;
+            display: flex;
+
+            .rotated-image {
+                transition: transform 0.5s ease;
+            }
+
+            .rotated {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .role-desc {
+        overflow: hidden;
+        transition: all 0.5s ease;
+
+        .desc-title {
+            font-size: $fontsize12;
+            color: $labelcolor;
+            margin-top: 16px;
+            margin-left: 16px;
+
+            .desc {
+                font-size: $fontsize14;
+                color: $inputcolor;
+                margin: 16px 0;
+            }
+
+            .line-seperator {
+                width: 100%;
+                background-color: $seperatorcolor;
+                height: 1px;
+            }
+        }
+    }
+
+    .invisible {
+        height: 0;
+    }
+
+    .visible {
+        height: auto;
+    }
+}

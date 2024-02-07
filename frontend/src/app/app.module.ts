@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContactComponent } from './contact/contact.component';
 import { LoginModule } from './login/login.module';
 import { RegistrationModule } from './registration/registration.module';
+import { ApplicationModule } from './application/application.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RegistrationModule } from './registration/registration.module';
     BrowserModule,
     AppRoutingModule,
     LoginModule,
-    RegistrationModule
+    RegistrationModule,
+    ApplicationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
