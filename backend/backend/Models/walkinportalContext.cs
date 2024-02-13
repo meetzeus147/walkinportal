@@ -1,0 +1,1029 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace backend.Models
+{
+    public partial class walkinportalContext : DbContext
+    {
+        public walkinportalContext()
+        {
+        }
+
+        public walkinportalContext(DbContextOptions<walkinportalContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<Application> Applications { get; set; }
+        public virtual DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public virtual DbSet<ApplicationType> ApplicationTypes { get; set; }
+        public virtual DbSet<College> Colleges { get; set; }
+        public virtual DbSet<Edqualification> Edqualifications { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<JobDesc> JobDescs { get; set; }
+        public virtual DbSet<JobRole> JobRoles { get; set; }
+        public virtual DbSet<JobRolesDesc> JobRolesDescs { get; set; }
+        public virtual DbSet<JobSlot> JobSlots { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Proqualification> Proqualifications { get; set; }
+        public virtual DbSet<ProqualificationExperttech> ProqualificationExperttechs { get; set; }
+        public virtual DbSet<ProqualificationFamiliartech> ProqualificationFamiliartechs { get; set; }
+        public virtual DbSet<Qualification> Qualifications { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Slot> Slots { get; set; }
+        public virtual DbSet<Stream> Streams { get; set; }
+        public virtual DbSet<Tech> Techs { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Userasset> Userassets { get; set; }
+        public virtual DbSet<Userdetail> Userdetails { get; set; }
+        public virtual DbSet<UserdetailsRole> UserdetailsRoles { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySQL("Server=localhost;Database=walk-in-portal;User ID=root;Password=user1;");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Application>(entity =>
+            {
+                entity.ToTable("application");
+
+                entity.HasIndex(e => e.JobId, "fk_application_jobs1_idx");
+
+                entity.HasIndex(e => e.SlotId, "fk_application_slots1_idx");
+
+                entity.HasIndex(e => e.UserId, "fk_application_users1_idx");
+
+                entity.Property(e => e.ApplicationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("application_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
+
+                entity.Property(e => e.Resume)
+                    .IsRequired()
+                    .HasColumnType("blob")
+                    .HasColumnName("resume");
+
+                entity.Property(e => e.SlotId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("slot_id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.HasOne(d => d.Job)
+                    .WithMany(p => p.Applications)
+                    .HasForeignKey(d => d.JobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_application_jobs1");
+
+                entity.HasOne(d => d.Slot)
+                    .WithMany(p => p.Applications)
+                    .HasForeignKey(d => d.SlotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_application_slots1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Applications)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_application_users1");
+            });
+
+            modelBuilder.Entity<ApplicationRole>(entity =>
+            {
+                entity.HasKey(e => new { e.ApplicationId, e.RoleId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("application_roles");
+
+                entity.HasIndex(e => e.ApplicationId, "fk_application_roles_application1_idx");
+
+                entity.HasIndex(e => e.RoleId, "fk_application_roles_roles1_idx");
+
+                entity.Property(e => e.ApplicationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("application_id");
+
+                entity.Property(e => e.RoleId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("role_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Application)
+                    .WithMany(p => p.ApplicationRoles)
+                    .HasForeignKey(d => d.ApplicationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_application_roles_application1");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.ApplicationRoles)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_application_roles_roles1");
+            });
+
+            modelBuilder.Entity<ApplicationType>(entity =>
+            {
+                entity.ToTable("application_types");
+
+                entity.HasIndex(e => e.ApplicationTypeName, "application_type_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.ApplicationTypeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("application_type_id");
+
+                entity.Property(e => e.ApplicationTypeName)
+                    .IsRequired()
+                    .HasColumnName("application_type_name");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
+
+            modelBuilder.Entity<College>(entity =>
+            {
+                entity.ToTable("colleges");
+
+                entity.HasIndex(e => e.CollegeName, "college_name_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.LocationId, "fk_colleges_locations_idx");
+
+                entity.Property(e => e.CollegeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("college_id");
+
+                entity.Property(e => e.CollegeName)
+                    .IsRequired()
+                    .HasColumnName("college_name");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.LocationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("location_id");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Colleges)
+                    .HasForeignKey(d => d.LocationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_colleges_locations");
+            });
+
+            modelBuilder.Entity<Edqualification>(entity =>
+            {
+                entity.ToTable("edqualification");
+
+                entity.HasIndex(e => e.CollegeId, "fk_edqualification_colleges1_idx");
+
+                entity.HasIndex(e => e.QualificationId, "fk_edqualification_qualifications1_idx");
+
+                entity.HasIndex(e => e.StreamId, "fk_edqualification_streams1_idx");
+
+                entity.HasIndex(e => e.UserId, "fk_edqualification_users1_idx");
+
+                entity.Property(e => e.EdqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("edqualification_id");
+
+                entity.Property(e => e.CollegeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("college_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.PassingYear)
+                    .HasColumnType("year(4)")
+                    .HasColumnName("passing_year");
+
+                entity.Property(e => e.Percentage)
+                    .HasPrecision(5)
+                    .HasColumnName("percentage");
+
+                entity.Property(e => e.QualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("qualification_id");
+
+                entity.Property(e => e.StreamId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("stream_id");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.HasOne(d => d.College)
+                    .WithMany(p => p.Edqualifications)
+                    .HasForeignKey(d => d.CollegeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_edqualification_colleges1");
+
+                entity.HasOne(d => d.Qualification)
+                    .WithMany(p => p.Edqualifications)
+                    .HasForeignKey(d => d.QualificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_edqualification_qualifications1");
+
+                entity.HasOne(d => d.Stream)
+                    .WithMany(p => p.Edqualifications)
+                    .HasForeignKey(d => d.StreamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_edqualification_streams1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Edqualifications)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_edqualification_users1");
+            });
+
+            modelBuilder.Entity<Job>(entity =>
+            {
+                entity.ToTable("jobs");
+
+                entity.HasIndex(e => e.LocationId, "fk_jobs_locations1_idx");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.FromTime)
+                    .HasColumnType("date")
+                    .HasColumnName("from_time");
+
+                entity.Property(e => e.JobName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("job_name");
+
+                entity.Property(e => e.LocationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("location_id");
+
+                entity.Property(e => e.ThingsToRemember)
+                    .HasColumnType("text")
+                    .HasColumnName("things_to_remember");
+
+                entity.Property(e => e.ToTime)
+                    .HasColumnType("date")
+                    .HasColumnName("to_time");
+
+                entity.Property(e => e.Venue)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("venue");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Jobs)
+                    .HasForeignKey(d => d.LocationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_jobs_locations1");
+            });
+
+            modelBuilder.Entity<JobDesc>(entity =>
+            {
+                entity.ToTable("job_desc");
+
+                entity.HasIndex(e => e.JobId, "fk_job_desc_jobs1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DescTitle)
+                    .HasMaxLength(255)
+                    .HasColumnName("desc_title");
+
+                entity.Property(e => e.Description)
+                    .HasColumnType("text")
+                    .HasColumnName("description");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
+
+                entity.HasOne(d => d.Job)
+                    .WithMany(p => p.JobDescs)
+                    .HasForeignKey(d => d.JobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_desc_jobs1");
+            });
+
+            modelBuilder.Entity<JobRole>(entity =>
+            {
+                entity.ToTable("job_roles");
+
+                entity.HasIndex(e => e.JobId, "fk_job_roles_jobs1_idx");
+
+                entity.HasIndex(e => e.RoleId, "fk_job_roles_roles1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
+
+                entity.Property(e => e.Package)
+                    .HasPrecision(10)
+                    .HasColumnName("package");
+
+                entity.Property(e => e.RoleId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("role_id");
+
+                entity.HasOne(d => d.Job)
+                    .WithMany(p => p.JobRoles)
+                    .HasForeignKey(d => d.JobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_roles_jobs1");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.JobRoles)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_roles_roles1");
+            });
+
+            modelBuilder.Entity<JobRolesDesc>(entity =>
+            {
+                entity.ToTable("job_roles_desc");
+
+                entity.HasIndex(e => e.RolesId, "fk_job_roles_desc_job_roles1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DescTitle)
+                    .HasMaxLength(255)
+                    .HasColumnName("desc_title");
+
+                entity.Property(e => e.Description)
+                    .HasColumnType("text")
+                    .HasColumnName("description");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.RolesId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("roles_id");
+
+                entity.HasOne(d => d.Roles)
+                    .WithMany(p => p.JobRolesDescs)
+                    .HasForeignKey(d => d.RolesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_roles_desc_job_roles1");
+            });
+
+            modelBuilder.Entity<JobSlot>(entity =>
+            {
+                entity.HasKey(e => new { e.JobId, e.SlotId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("job_slots");
+
+                entity.HasIndex(e => e.JobId, "fk_job_slots_jobs1_idx");
+
+                entity.HasIndex(e => e.SlotId, "fk_job_slots_slots1_idx");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
+
+                entity.Property(e => e.SlotId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("slot_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Job)
+                    .WithMany(p => p.JobSlots)
+                    .HasForeignKey(d => d.JobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_slots_jobs1");
+
+                entity.HasOne(d => d.Slot)
+                    .WithMany(p => p.JobSlots)
+                    .HasForeignKey(d => d.SlotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_job_slots_slots1");
+            });
+
+            modelBuilder.Entity<Location>(entity =>
+            {
+                entity.ToTable("locations");
+
+                entity.HasIndex(e => e.LocationName, "location_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.LocationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("location_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.LocationName)
+                    .IsRequired()
+                    .HasColumnName("location_name");
+            });
+
+            modelBuilder.Entity<Proqualification>(entity =>
+            {
+                entity.ToTable("proqualification");
+
+                entity.HasIndex(e => e.ApplicationTypeId, "fk_proqualification_application_types1_idx");
+
+                entity.HasIndex(e => e.UserId, "fk_proqualification_users1_idx");
+
+                entity.Property(e => e.ProqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("proqualification_id");
+
+                entity.Property(e => e.AppearedZeusTest)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("appeared_zeus_test");
+
+                entity.Property(e => e.ApplicationTypeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("application_type_id");
+
+                entity.Property(e => e.CurrentCtc)
+                    .HasPrecision(10)
+                    .HasColumnName("current_ctc");
+
+                entity.Property(e => e.CurrentlyOnNoticePeriod)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("currently_on_notice_period");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ExpYear)
+                    .HasColumnType("year(4)")
+                    .HasColumnName("exp_year");
+
+                entity.Property(e => e.ExpectedCtc)
+                    .HasPrecision(10)
+                    .HasColumnName("expected_ctc");
+
+                entity.Property(e => e.NoticeEnd)
+                    .HasColumnType("date")
+                    .HasColumnName("notice_end");
+
+                entity.Property(e => e.NoticePeriodLength)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("notice_period_length");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.Property(e => e.ZeusTestRole)
+                    .HasMaxLength(255)
+                    .HasColumnName("zeus_test_role");
+
+                entity.HasOne(d => d.ApplicationType)
+                    .WithMany(p => p.Proqualifications)
+                    .HasForeignKey(d => d.ApplicationTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_application_types1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Proqualifications)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_users1");
+            });
+
+            modelBuilder.Entity<ProqualificationExperttech>(entity =>
+            {
+                entity.HasKey(e => new { e.ProqualificationId, e.TechId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("proqualification_experttechs");
+
+                entity.HasIndex(e => e.ProqualificationId, "fk_proqualification_experttechs_proqualification1_idx");
+
+                entity.HasIndex(e => e.TechId, "fk_proqualification_experttechs_techs1_idx");
+
+                entity.Property(e => e.ProqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("proqualification_id");
+
+                entity.Property(e => e.TechId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("tech_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Proqualification)
+                    .WithMany(p => p.ProqualificationExpertteches)
+                    .HasForeignKey(d => d.ProqualificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_experttechs_proqualification1");
+
+                entity.HasOne(d => d.Tech)
+                    .WithMany(p => p.ProqualificationExpertteches)
+                    .HasForeignKey(d => d.TechId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_experttechs_techs1");
+            });
+
+            modelBuilder.Entity<ProqualificationFamiliartech>(entity =>
+            {
+                entity.HasKey(e => new { e.ProqualificationId, e.TechId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("proqualification_familiartechs");
+
+                entity.HasIndex(e => e.ProqualificationId, "fk_proqualification_familiartechs_proqualification1_idx");
+
+                entity.HasIndex(e => e.TechId, "fk_proqualification_familiartechs_techs1_idx");
+
+                entity.Property(e => e.ProqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("proqualification_id");
+
+                entity.Property(e => e.TechId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("tech_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Proqualification)
+                    .WithMany(p => p.ProqualificationFamiliarteches)
+                    .HasForeignKey(d => d.ProqualificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_familiartechs_proqualification1");
+
+                entity.HasOne(d => d.Tech)
+                    .WithMany(p => p.ProqualificationFamiliarteches)
+                    .HasForeignKey(d => d.TechId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proqualification_familiartechs_techs1");
+            });
+
+            modelBuilder.Entity<Qualification>(entity =>
+            {
+                entity.ToTable("qualifications");
+
+                entity.HasIndex(e => e.QualificationName, "qualification_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.QualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("qualification_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.QualificationName)
+                    .IsRequired()
+                    .HasColumnName("qualification_name");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("roles");
+
+                entity.HasIndex(e => e.RoleName, "role_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.RoleId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("role_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasColumnName("role_name");
+            });
+
+            modelBuilder.Entity<Slot>(entity =>
+            {
+                entity.ToTable("slots");
+
+                entity.Property(e => e.SlotId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("slot_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.FromTime)
+                    .HasColumnType("time")
+                    .HasColumnName("from_time");
+
+                entity.Property(e => e.ToTime)
+                    .HasColumnType("time")
+                    .HasColumnName("to_time");
+            });
+
+            modelBuilder.Entity<Stream>(entity =>
+            {
+                entity.ToTable("streams");
+
+                entity.HasIndex(e => e.StreamName, "stream_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.StreamId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("stream_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.StreamName)
+                    .IsRequired()
+                    .HasColumnName("stream_name");
+            });
+
+            modelBuilder.Entity<Tech>(entity =>
+            {
+                entity.ToTable("techs");
+
+                entity.HasIndex(e => e.TechName, "tech_name_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.TechId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("tech_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.TechName)
+                    .IsRequired()
+                    .HasColumnName("tech_name");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
+                entity.HasIndex(e => e.Email, "email_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("password");
+            });
+
+            modelBuilder.Entity<Userasset>(entity =>
+            {
+                entity.ToTable("userassets");
+
+                entity.HasIndex(e => e.UserId, "fk_userassets_users1_idx");
+
+                entity.Property(e => e.UserassetId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("userasset_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ProfilePhoto)
+                    .HasColumnType("blob")
+                    .HasColumnName("profile_photo");
+
+                entity.Property(e => e.Resume)
+                    .IsRequired()
+                    .HasColumnType("blob")
+                    .HasColumnName("resume");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Userassets)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_userassets_users1");
+            });
+
+            modelBuilder.Entity<Userdetail>(entity =>
+            {
+                entity.ToTable("userdetails");
+
+                entity.HasIndex(e => e.UserId, "fk_userdetails_users1_idx");
+
+                entity.Property(e => e.UserdetailId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("userdetail_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("last_name");
+
+                entity.Property(e => e.PhoneNo)
+                    .HasPrecision(10)
+                    .HasColumnName("phone_no");
+
+                entity.Property(e => e.PortfolioUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("portfolio_url");
+
+                entity.Property(e => e.ReferalEmpName)
+                    .HasMaxLength(255)
+                    .HasColumnName("referal_emp_name");
+
+                entity.Property(e => e.SendMeUpdate)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("send_me_update");
+
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Userdetails)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_userdetails_users1");
+            });
+
+            modelBuilder.Entity<UserdetailsRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserdetailId, e.RoleId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("userdetails_roles");
+
+                entity.HasIndex(e => e.RoleId, "fk_userdetails_roles_roles1_idx");
+
+                entity.HasIndex(e => e.UserdetailId, "fk_userdetails_roles_userdetails1_idx");
+
+                entity.Property(e => e.UserdetailId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("userdetail_id");
+
+                entity.Property(e => e.RoleId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("role_id");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified)
+                    .HasColumnType("datetime")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("dt_modified")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.UserdetailsRoles)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_userdetails_roles_roles1");
+
+                entity.HasOne(d => d.Userdetail)
+                    .WithMany(p => p.UserdetailsRoles)
+                    .HasForeignKey(d => d.UserdetailId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_userdetails_roles_userdetails1");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
+}
