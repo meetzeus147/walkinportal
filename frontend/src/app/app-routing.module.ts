@@ -8,11 +8,11 @@ import { PersonalInfoComponent } from './registration/personal-info/personal-inf
 import { ProgressBarComponent } from './registration/progress-bar/progress-bar.component';
 
 const routes: Routes = [
-  // {path: '', redirectTo: 'login', component: LoginFormComponent},
+  {path: '', component: LoginFormComponent},
   {path: 'login', component: LoginFormComponent},
   {path: 'register',component: CreateAccountBarComponent},
   {path: 'application', component: JobInfoComponent},
-  {path: 'applied', component: AppliedComponent}
+  {path: 'applied', component: AppliedComponent, data: {}}
 ];
 
 @NgModule({
