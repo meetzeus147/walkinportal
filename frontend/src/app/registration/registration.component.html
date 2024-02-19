@@ -1,0 +1,13 @@
+<app-create-account-bar [createshow]="reviewShow"></app-create-account-bar>
+<app-progress-bar [step2]="qualificationShow||reviewShow" [step3]="reviewShow"></app-progress-bar>
+<app-personal-info (personalInfoUpdated)="updatePersonalInfo($event)" class="step1"
+    *ngIf=personalShow></app-personal-info>
+
+<app-qualifications (eduQualificationUpdated)="updateEducationQualifications($event)"
+    (proQualificationUpdated)="updateProfessionalQualifications($event)" class="step2"
+    *ngIf=qualificationShow></app-qualifications>
+<app-review *ngIf=reviewShow [UserData]="userData" class="step3"></app-review>
+<div class="buttonContainer">
+    <button type="button" (click)="previous()" [hidden]="personalShow" class="next-button">PREVIOUS</button>
+    <button type="button" (click)="next()" [hidden]="reviewShow" class="next-button">NEXT</button>
+</div>

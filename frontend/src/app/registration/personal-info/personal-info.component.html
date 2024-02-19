@@ -3,52 +3,72 @@
         <div class="personal-info">
             <div class="data-div">
                 <div class="label">First Name*</div>
-                <input type="text" class="text-input" placeholder="Enter First Name">
+                <input type="text" class="text-input" placeholder="Enter First Name"
+                    [(ngModel)]="personalInfo.FirstName" (change)="updatePersonalInfo()">
             </div>
             <div class="data-div">
                 <div class="label">Last Name*</div>
-                <input type="text" class="text-input" placeholder="Enter Last Name">
+                <input type="text" class="text-input" placeholder="Enter Last Name" [(ngModel)]="personalInfo.LastName"
+                    (change)="updatePersonalInfo()">
             </div>
             <div class="data-div">
                 <div class="label">Email*</div>
-                <input type="text" class="text-input" placeholder="Enter Email">
+                <input type="text" class="text-input" placeholder="Enter Email" [(ngModel)]="personalInfo.Email"
+                    (change)="updatePersonalInfo()">
             </div>
             <div class="data-div">
                 <div class="label">Phone Number*</div>
-                <input type="tel" class="phone-input">
+                <div class="number-div">
+                    <div class="plus">+</div>
+                    <input type="tel" title="code" placeholder="" class="code-input"
+                        [(ngModel)]="personalInfo.countryCode" (change)="updatePersonalInfo()" />
+                    <input type="tel" title="number" placeholder="" class="phone-input"
+                        [(ngModel)]="personalInfo.PhoneNumber" (change)="updatePersonalInfo()" />
+                </div>
             </div>
-            <label class="data-div upload-resume-div" (change)="uploadResume($event)" for="resume-input">
+            <label class="data-div upload-resume-div" tabindex="0" (change)="uploadResume($event)" for="resume-input">
                 <img src="../../../assets/svgs/Upload_24dp.svg" alt="upload" class="upload-svg">
-                <input type="file" class="resume-input" accept="application/pdf" id="resume-input">
+                <input type="file" class="resume-input" tabindex="1" accept="application/pdf" id="resume-input"
+                    (change)="updatePersonalInfo()" />
                 <div class="upload-label">Upload Resume</div>
-                <input class="file-name" placeholder="{{fileName}}" disabled>
+                <input class="file-name" placeholder="{{fileName}}" disabled />
             </label>
             <div class="data-div">
                 <div class="label">Enter Portfolio URL(if any)</div>
-                <input type="text" class="text-input" placeholder="Enter URL">
+                <input type="text" class="text-input" placeholder="Enter URL" [(ngModel)]="personalInfo.PortfolioURL"
+                    (change)="updatePersonalInfo()">
             </div>
             <div class="data-div">
                 <div class="label">Preferred Job Roles*</div>
                 <div class="roles-options">
-                    <input type="checkbox" id="instructionalDesigner" class="roles-checkbox">
+                    <input type="checkbox" id="instructionalDesigner" class="roles-checkbox"
+                        (change)="toggleJobRole('Instructional Designer')" />
                     <label for="instructionalDesigner" class="roles-label">Instructional Designer</label><br>
                 </div>
                 <div class="roles-options">
-                    <input type="checkbox" id="softwareEngineer" class="roles-checkbox">
+                    <input type="checkbox" id="softwareEngineer" class="roles-checkbox"
+                        (change)="toggleJobRole('Software Engineer')" />
                     <label for="softwareEngineer" class="roles-label">Software Engineer</label><br>
                 </div>
                 <div class="roles-options">
-                    <input type="checkbox" id="softwareQualityEngineer" class="roles-checkbox">
+                    <input type="checkbox" id="softwareQualityEngineer" class="roles-checkbox"
+                        (change)="toggleJobRole('Software Quality Engineer')" />
                     <label for="softwareQualityEngineer" class="roles-label">Software Quality Engineer</label>
                 </div>
             </div>
+
+
+
+
             <div class="data-div">
                 <div class="label">If You Are Registering Via A Referral, Please Mention Full Name Of The Employee Who
                     Referred You</div>
-                <input type="text" class="text-input">
+                <input type="text" title="Referral" placeholder="" class="text-input"
+                    [(ngModel)]="personalInfo.Referral" (change)="updatePersonalInfo()" />
             </div>
             <div class="sendmeupdates-div">
-                <input type="checkbox" id="sendmeupdates" class="updates-checkbox">
+                <input type="checkbox" id="sendmeupdates" class="updates-checkbox" [(ngModel)]="personalInfo.sendemail"
+                    (change)="updatePersonalInfo()">
                 <label for="sendmeupdates" class="updates-label">Send me job related updates via mail</label>
             </div>
         </div>
@@ -56,12 +76,13 @@
             <div class="flex-div">
                 <img [src]=profilePhotoSrc alt="default-profile-photo" class="profile-photo">
                 <label for="photo-input" class="photo-input-label" (change)="uploadProfilePhoto($event)">
-                    <input type="file" class="photo-input" id="photo-input" accept="image/jpeg,image/jpg,image/png">
+                    <input type="file" class="photo-input" id="photo-input" (change)="updatePersonalInfo()"
+                        accept="image/jpeg,image/jpg,image/png" />
                     <div class="upload-label">UPLOAD DISPLAY PICTURE</div>
                 </label>
                 <div class="input-desc">Max. image size: 5 MB</div>
             </div>
         </div>
     </div>
-    <button class="next-button">NEXT</button>
+    <!-- <button (click)="showStep2()" class="next-button">NEXT</button> -->
 </div>

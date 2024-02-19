@@ -1,29 +1,46 @@
-$bodybackground: #eeeeee;
-$primaryfont: 'Quicksand';
+@mixin flexcontainer($justify) {
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+  text-align: center;
+}
+@mixin fontstyle($font-family, $size, $weight, $color, $opacity) {
+  font-family: $font-family, sans-serif;
+  font-size: $size;
 
-@font-face {
-    font-family: 'Quicksand';
-    font-display: optional;
-    src: url('../src/assets/Quicksand-VariableFont_wght.woff2') format('woff2');
+  font-weight: $weight;
+  color: $color;
+  opacity: $opacity;
 }
 
 * {
-    margin: 0;
+  margin: 0;
 }
 
-html,body{
-    background-color: $bodybackground;
-    font-family: $primaryfont;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: bold;
-    height: 100vh;
+body {
+  // min-width: 100vh;
+  min-height: 100vh;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  font-family: "Quicksand", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #eeeeee;
+}
+html {
+  font-size: 62.5%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.app-root{
-    // background-color: $bodybackground;
-    display: block;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.app-root {
+  // background-color: $bodybackground;
+  display: block;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+@import "./_mediaQueries.scss";

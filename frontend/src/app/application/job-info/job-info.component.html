@@ -35,8 +35,8 @@
     <div class="time-slots-div">
         Select a Time Slot :
         <div class="slot" *ngFor="let slot of job?.slots;let i = index">
-            <input type="radio" class="slot-input" [id]="'slot'+i" name="slots">
-            <label [for]="i" class="slot-label">
+            <input type="radio" class="slot-input" id="slot" [value]="'slot'+i" name="slots" />
+            <label for="slot" class="slot-label">
                 {{convertTo12HourFormat(slot['from_time'])}} to {{convertTo12HourFormat(slot['to_time'])}}
             </label>
         </div>
@@ -45,8 +45,8 @@
     <div class="roles-div">
         Select Your Preference :
         <div class="role" *ngFor="let role of job?.roles;let i = index">
-            <input type="checkbox" name="roles" [id]="i" class="role-input">
-            <label [for]="'role'+i" class="role-label">{{role['role_name']}}</label>
+            <input type="checkbox" name="roles" id="role" class="role-input" />
+            <label for="role" class="role-label">{{role['role_name']}}</label>
         </div>
     </div>
     <div class="line-seperator"></div>

@@ -1,44 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+// import { userData } from '../userRegistrationData';
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.scss']
+  styleUrls: ['./SCSS/style.scss']
 })
 export class PersonalInfoComponent implements OnInit {
+  selectedRoles: string[] = [];
+  @Output() personalInfoUpdated = new EventEmitter<any>();
 
-  constructor() { }
+  personalInfo: any = {
+    FirstName: '',
+    LastName: '',
+    Email: '',
+    ProfilePhoto: null,
+    PhoneNumber: '',
+    PortfolioURL: '',
+    Referral: '',
+    sendemail: false,
+    countryCode: '',
+    Resume: null,
+    ResumeFileName: '',
+    PreferredJobRoles: [],
+  };
 
-  ngOnInit(): void {
+  updatePersonalInfo(): void {
+    this.personalInfoUpdated.emit(this.personalInfo);
+    console.log('Personal info updated in child component' + this.personalInfo);
   }
+  constructor() {}
 
-  input = document.querySelector("#resume-input");
-  fileName = document.querySelector(".file-name");
-  inputFile:any;
+  ngOnInit(): void {}
 
-  uploadResume(event:any):void{
+  toggleJobRole(role: string): void {
+    const index = this.selectedRoles.indexOf(role);
+    if (index !== -1) {
+      this.selectedRoles.splice(index, 1); // Remove role if already selected
+    } else {
+      this.selectedRoles.push(role); // Add role if not already selected
+    }
+    console.log('Selected job roles:', this.selectedRoles);
+    this.personalInfo.PreferredJobRoles = this.selectedRoles;
+    console.log('selected job roles:', this.personalInfo.PreferredJobRoles);
+  }
+  input = document.querySelector('#resume-input');
+  fileName = document.querySelector('.file-name');
+  inputFile: any;
+
+  uploadResume(event: any): void {
     this.inputFile = event.target.files[0];
-    console.log(this.inputFile);
-    this.fileName=this.inputFile?this.inputFile.name:'';
+    if(this.inputFile){
+      this.personalInfo.Resume = this.inputFile;
+      const blob = new Blob([this.inputFile],{type: this.inputFile.type});
+
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+
+      reader.onload = async (e: any) => {
+        this.personalInfo.Resume = await e.target.result;
+      };
+    }
+    this.fileName = this.inputFile ? this.inputFile.name : '';
+    this.personalInfo.ResumeFileName = this.fileName;
   }
 
-  photoinput = document.querySelector(".photo-input");
-  inputPhoto:any;
+  photoinput = document.querySelector('.photo-input');
+  inputPhoto: any;
   profilePhotoSrc: string = '../../../assets/images/default-profile-photo.png';
 
-  uploadProfilePhoto(event:any):void{
+  uploadProfilePhoto(event: any): void {
     this.inputPhoto = event.target.files[0];
     if (this.inputPhoto) {
-      // Assuming you have a method to handle image uploads and get a URL
-      // For example, you can use FileReader to read the image and convert it to a data URL
+      this.personalInfo.ProfilePhoto = this.inputPhoto;
+      const blob = new Blob([this.inputPhoto],{type: this.inputPhoto.type});
+
       const reader = new FileReader();
-      
-      reader.onload = (e: any) => {
-        this.profilePhotoSrc = e.target.result;
+      reader.readAsDataURL(blob);
+
+      reader.onload = async (e: any) => {
+        this.personalInfo.ProfilePhoto = await e.target.result;
+        this.profilePhotoSrc = await this.personalInfo.ProfilePhoto;
       };
-      
-      reader.readAsDataURL(this.inputPhoto);
     }
   }
-
 }

@@ -1,0 +1,301 @@
+.login-container {
+  display: block;
+  background-color: #ffffff;
+  margin-top: 14.3rem;
+  margin-left: auto;
+  margin-right: auto;
+  height: 41.9rem;
+  width: 48.8rem;
+  box-sizing: border-box;
+}
+@media (max-width: 450px) {
+  .login-container {
+    height: 41.9rem;
+    width: 34.3rem;
+  }
+}
+.login-container .blueline {
+  height: 0.4rem;
+  background: #3ac7ec;
+  border-radius: 0.2rem 0.2rem 0rem 0rem;
+  opacity: 1;
+}
+.login-container .content {
+  padding: 0 3.2rem;
+}
+@media (max-width: 450px) {
+  .login-container .content {
+    padding: 0 1.6rem;
+  }
+}
+.login-container .content .card-head {
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  justify-content: center;
+  height: 3rem;
+}
+.login-container .content .card-head .heading_box {
+  font-family: "Quicksand", sans-serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: #222222;
+  opacity: 1;
+  letter-spacing: 0rem;
+}
+.login-container .content form {
+  display: flex;
+  flex-direction: column;
+}
+.login-container .content .customInput {
+  padding-bottom: 0.5rem;
+  width: 100%;
+  height: 2rem;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #222222;
+  opacity: 1;
+  margin-left: 0;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  letter-spacing: 0rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.login-container .content .customInput:not(:-moz-placeholder-shown) {
+  border-color: #000;
+}
+.login-container .content .customInput:focus, .login-container .content .customInput:not(:placeholder-shown) {
+  border-color: #000;
+}
+.login-container .content .customInput .option {
+  padding-left: 0;
+  margin-left: 0;
+}
+.login-container .content .inputUnderline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.1rem;
+  background-color: #000;
+  opacity: 0.12;
+  background: #000000 0% 0% no-repeat padding-box;
+}
+.login-container .content .inputContainer1 {
+  height: 2.5rem;
+  margin-top: 3.2rem;
+  position: relative;
+}
+.login-container .content .inputContainer1 .u1 {
+  margin-bottom: 0.5rem;
+}
+.login-container .content .forgot {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 100;
+  color: #1f7a54;
+  opacity: 1;
+  margin-top: 0.5rem;
+  text-align: right;
+  letter-spacing: 0rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  height: 1.8rem;
+  justify-self: end;
+}
+.login-container .content .remember {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #222222;
+  opacity: 1;
+  display: flex;
+  margin-top: 2.4rem;
+  height: 2.4rem;
+  align-items: center;
+  text-align: left;
+  letter-spacing: 0rem;
+  accent-color: #1f7a54;
+}
+.login-container .content .inputContainer2 {
+  height: 2.5rem;
+  margin-top: 3.3rem;
+  position: relative;
+}
+.login-container .content .showPasswordBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  align-items: center;
+  float: right;
+  padding: 0rem;
+  margin: 0;
+}
+@media (max-width: 400px) {
+  .login-container .content .showPasswordBtn {
+    float: none;
+  }
+}
+.login-container .content .passwordWrapper {
+  display: flex;
+}
+.login-container .content .showPassword {
+  width: 2.2rem;
+  height: 2rem;
+}
+.login-container .content .rem-check {
+  height: 2.4rem;
+  align-items: center;
+  width: 1.8rem;
+  margin: 0;
+  margin-right: 0.5rem;
+  text-align: left;
+  font: normal normal normal 2.4rem/1.7rem Material-Design-Iconic-Font;
+  letter-spacing: 0rem;
+  color: #1f7a54;
+  opacity: 1;
+}
+.login-container .button-div {
+  display: flex;
+  margin-top: 1.6rem;
+  width: 48.8rem;
+  height: 8rem;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  justify-content: center;
+}
+@media (max-width: 450px) {
+  .login-container .button-div {
+    width: 34.3rem;
+  }
+}
+.login-container .button-div .submit {
+  width: 21.6rem;
+  height: 4rem;
+  padding: 0;
+  border: 0rem;
+  border-radius: 0.2rem;
+  background: #3fd28b 0% 0% no-repeat padding-box;
+  box-shadow: 0rem 0.3rem 0.5rem rgba(0, 0, 0, 0.2392156863);
+  opacity: 1;
+  margin-top: 1.6rem;
+  margin-bottom: 2.4rem;
+}
+.login-container .button-div .btn-text {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #1f2834;
+  opacity: 1;
+  letter-spacing: 0rem;
+  width: 4.6rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+.login-container .notregistered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+.login-container .notregistered .not {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #222222;
+  opacity: 1;
+}
+.login-container .notregistered .create {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #1f7a54;
+  opacity: 1;
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+}
+
+.footer {
+  margin-top: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  letter-spacing: 0rem;
+  text-align: center;
+  color: #1f7a54;
+  opacity: 1;
+}
+.footer .about {
+  width: 4rem;
+  height: 1.8rem;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1f7a1f;
+  opacity: 1;
+  letter-spacing: 0rem;
+  margin-right: 0.8rem;
+}
+.footer .contactus {
+  /* width: 7.2rem; */
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1f7a1f;
+  opacity: 1;
+  margin-left: 0.8rem;
+  height: 1.8rem;
+  text-align: center;
+  letter-spacing: 0rem;
+}
+.footer .middleline {
+  width: 0px;
+  height: 1.8rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.1215686275);
+  opacity: 1;
+}
+
+/* ... Your existing CSS rules ... */
+/* Mobile screens */
+@media only screen and (max-width: 520px) {
+  html {
+    font-size: 50%;
+  }
+}
+@media only screen and (max-width: 350px) {
+  html {
+    font-size: 45%;
+  }
+}
+@media only screen and (max-width: 270px) {
+  html {
+    font-size: 35%;
+  }
+}
+@media only screen and (max-width: 200px) {
+  html {
+    font-size: 30%;
+  }
+}
+@media only screen and (max-width: 170px) {
+  html {
+    font-size: 27%;
+  }
+}
+@media only screen and (max-width: 150px) {
+  html {
+    font-size: 23%;
+  }
+}
+@media only screen and (max-width: 130px) {
+  html {
+    font-size: 20%;
+  }
+}/*# sourceMappingURL=style.css.map */

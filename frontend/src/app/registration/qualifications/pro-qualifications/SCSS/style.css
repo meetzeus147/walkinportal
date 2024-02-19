@@ -1,0 +1,586 @@
+.application-type {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #333333;
+  opacity: 1;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  align-items: center;
+  text-align: left;
+  letter-spacing: 0rem;
+  margin-top: 1.3rem;
+  height: 2rem;
+  padding: 0;
+}
+.application-type .radio {
+  margin: 0;
+  padding: 0;
+  width: 2rem;
+  height: 2.4rem;
+  margin-right: 0.8rem;
+  text-align: left;
+  font: normal normal normal 2.4rem/1.7rem "Material-Design-Iconic-Font";
+  letter-spacing: 0rem;
+  accent-color: #1f7a54;
+  opacity: 1;
+}
+.application-type .type {
+  margin: 0;
+  height: 2rem;
+  text-align: left;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #333333;
+  opacity: 1;
+  letter-spacing: 0rem;
+}
+.application-type .label1 {
+  padding-right: 2.4rem;
+  height: 2rem;
+}
+.problueline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #dbefff;
+  margin: 0 2.4rem 0 2.4rem;
+  height: 5.6rem;
+}
+.problueline .protitle {
+  font-size: 1.6rem;
+  margin-left: 1.6rem;
+}
+.problueline .verline {
+  color: #1f7a54;
+  height: 5.6rem;
+  align-items: center;
+}
+.problueline .uparrow {
+  padding: 1.6rem 1rem;
+  width: 1.2rem;
+  height: 2.4rem;
+  text-align: left;
+  letter-spacing: -0.06rem;
+  color: #1f7a54;
+  opacity: 1;
+  border-left: 0.1rem solid rgba(51, 51, 51, 0.5);
+}
+.problueline .downarrow {
+  padding: 1.6rem 1rem;
+  width: 1.2rem;
+  height: 2.4rem;
+  text-align: left;
+  letter-spacing: -0.06rem;
+  color: #1f7a54;
+  opacity: 1;
+  border-left: 0.1rem solid rgba(51, 51, 51, 0.5);
+}
+
+.proqualifications1 {
+  margin: 0 2.4rem 2.4rem 2.4rem;
+  padding: 2.4rem;
+  background-color: #ffffff;
+}
+.proqualifications1 .label {
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.proqualifications1 .application-type {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #333333;
+  opacity: 1;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  align-items: center;
+  text-align: left;
+  letter-spacing: 0rem;
+  margin-top: 1.3rem;
+  height: 2rem;
+  padding: 0;
+}
+.proqualifications1 .application-type .radio {
+  margin: 0;
+  padding: 0;
+  width: 2rem;
+  height: 2.4rem;
+  margin-right: 0.8rem;
+  text-align: left;
+  font: normal normal normal 2.4rem/1.7rem "Material-Design-Iconic-Font";
+  letter-spacing: 0rem;
+  accent-color: #1f7a54;
+  opacity: 1;
+}
+.proqualifications1 .application-type .type {
+  margin: 0;
+  height: 2rem;
+  text-align: left;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #333333;
+  opacity: 1;
+  letter-spacing: 0rem;
+}
+.proqualifications1 .application-type .label1 {
+  padding-right: 2.4rem;
+  width: 5.3rem;
+  height: 2rem;
+}
+.proqualifications1 .application-type .label2 {
+  width: 17rem;
+}
+
+.proqualifications {
+  margin: 0 2.4rem 2.4rem 2.4rem;
+  padding: 2.4rem;
+  background-color: #ffffff;
+  display: grid;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+}
+.proqualifications .arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("/assets/quantum screen assets/quantum screen assets/icons/arrow-down.svg");
+  background-size: 3rem 2.5rem;
+  background-position: right;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+}
+.proqualifications .customInput {
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  padding-bottom: 0.6rem;
+  width: 20rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-left: 0;
+  background-color: transparent;
+  text-align: left;
+  color: #222222;
+  opacity: 1;
+  letter-spacing: 0rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.proqualifications .customInput .option {
+  padding-left: 0;
+  margin-left: 0;
+}
+.proqualifications .customInput1 {
+  width: 95%;
+}
+.proqualifications .data-div {
+  grid-column: 1/-1;
+  margin-bottom: 4rem;
+}
+.proqualifications .data-div input[type=number]::-webkit-inner-spin-button, .proqualifications .data-div input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.proqualifications .data-div .label {
+  display: block;
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.proqualifications .data-div .text-input {
+  width: 45%;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+}
+.proqualifications .data-div .text-input ::-moz-placeholder {
+  opacity: 1;
+  color: #222222;
+}
+.proqualifications .data-div .text-input ::placeholder {
+  color: #222222;
+}
+.proqualifications .data-div .text-input:focus {
+  outline: none;
+}
+.proqualifications .data-div .number-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.proqualifications .data-div .plus {
+  font-size: 1.6rem;
+  align-items: center;
+}
+.proqualifications .data-div .code-input {
+  width: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.proqualifications .data-div .code-input:focus {
+  outline: none;
+}
+.proqualifications .data-div .phone-input {
+  width: 9rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.proqualifications .data-div .phone-input:focus {
+  outline: none;
+}
+.proqualifications .data-div .roles-options {
+  display: flex;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+.proqualifications .data-div .roles-options .roles-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.proqualifications .data-div .roles-options .roles-label {
+  font-size: 1.6rem;
+}
+.proqualifications .data-div1 {
+  grid-column: 1/-1;
+  margin-bottom: 4rem;
+}
+.proqualifications .data-div1 .label {
+  width: 100%;
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.proqualifications .data-div1 .text-input {
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+}
+.proqualifications .data-div1 .text-input ::-moz-placeholder {
+  opacity: 1;
+  color: #222222;
+}
+.proqualifications .data-div1 .text-input ::placeholder {
+  color: #222222;
+}
+.proqualifications .data-div1 .text-input:focus {
+  outline: none;
+}
+.proqualifications .data-div1 .number-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.proqualifications .data-div1 .plus {
+  font-size: 1.6rem;
+  align-items: center;
+}
+.proqualifications .data-div1 .code-input {
+  width: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.proqualifications .data-div1 .code-input:focus {
+  outline: none;
+}
+.proqualifications .data-div1 .phone-input {
+  width: 9rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.proqualifications .data-div1 .phone-input:focus {
+  outline: none;
+}
+.proqualifications .data-div1 .roles-options {
+  display: flex;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+.proqualifications .data-div1 .roles-options .roles-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.proqualifications .data-div1 .roles-options .roles-label {
+  font-size: 1.6rem;
+}
+.proqualifications .nobottom {
+  margin-bottom: 1.6rem;
+}
+
+.fresherqualifications {
+  margin: 0 2.4rem 2.4rem 2.4rem;
+  padding: 2.4rem;
+  background-color: #ffffff;
+  display: grid;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+}
+.fresherqualifications .arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("/assets/quantum screen assets/quantum screen assets/icons/arrow-down.svg");
+  background-size: 3rem 2.5rem;
+  background-position: right;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+}
+.fresherqualifications .customInput {
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  padding-bottom: 0.6rem;
+  width: 20rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-left: 0;
+  background-color: transparent;
+  text-align: left;
+  color: #222222;
+  opacity: 1;
+  letter-spacing: 0rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.fresherqualifications .customInput .option {
+  padding-left: 0;
+  margin-left: 0;
+}
+.fresherqualifications .customInput1 {
+  width: 95%;
+}
+.fresherqualifications .data-div {
+  grid-column: 1/-1;
+  margin-bottom: 4rem;
+}
+.fresherqualifications .data-div input[type=number]::-webkit-inner-spin-button, .fresherqualifications .data-div input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.fresherqualifications .data-div .label {
+  display: block;
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.fresherqualifications .data-div .text-input {
+  width: 45%;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+}
+.fresherqualifications .data-div .text-input ::-moz-placeholder {
+  opacity: 1;
+  color: #222222;
+}
+.fresherqualifications .data-div .text-input ::placeholder {
+  color: #222222;
+}
+.fresherqualifications .data-div .text-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div .number-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.fresherqualifications .data-div .plus {
+  font-size: 1.6rem;
+  align-items: center;
+}
+.fresherqualifications .data-div .code-input {
+  width: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.fresherqualifications .data-div .code-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div .phone-input {
+  width: 9rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.fresherqualifications .data-div .phone-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div .roles-options {
+  display: flex;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+.fresherqualifications .data-div .roles-options .roles-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.fresherqualifications .data-div .roles-options .roles-label {
+  font-size: 1.6rem;
+}
+.fresherqualifications .data-div1 {
+  grid-column: 1/-1;
+  margin-bottom: 4rem;
+}
+.fresherqualifications .data-div1 .label {
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.fresherqualifications .data-div1 .text-input {
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+}
+.fresherqualifications .data-div1 .text-input ::-moz-placeholder {
+  opacity: 1;
+  color: #222222;
+}
+.fresherqualifications .data-div1 .text-input ::placeholder {
+  color: #222222;
+}
+.fresherqualifications .data-div1 .text-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div1 .number-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.fresherqualifications .data-div1 .plus {
+  font-size: 1.6rem;
+  align-items: center;
+}
+.fresherqualifications .data-div1 .code-input {
+  width: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.fresherqualifications .data-div1 .code-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div1 .phone-input {
+  width: 9rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.fresherqualifications .data-div1 .phone-input:focus {
+  outline: none;
+}
+.fresherqualifications .data-div1 .roles-options {
+  display: flex;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+.fresherqualifications .data-div1 .roles-options .roles-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.fresherqualifications .data-div1 .roles-options .roles-label {
+  font-size: 1.6rem;
+}
+.fresherqualifications .nobottom {
+  margin-bottom: 1.6rem;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.buttonContainer .next-button {
+  background-color: #3fd28b;
+  color: #1f2834;
+  font-size: 1.4rem;
+  padding: 0.5rem 1.6rem;
+  border: none;
+  border-radius: 0.2rem;
+  box-shadow: 0rem 0.3rem 0.5rem rgba(0, 0, 0, 0.2392156863);
+  margin-bottom: 3rem;
+  margin-right: 1.6rem;
+}
+.buttonContainer .next-button:hover {
+  cursor: pointer;
+  transform: translateY(-0.2em);
+}/*# sourceMappingURL=style.css.map */

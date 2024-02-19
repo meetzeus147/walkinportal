@@ -1,0 +1,394 @@
+<div class="containerTitle">
+    <div class="title">Personal Information</div>
+    <div class="editcontainer">
+        <img class="penicon" src="../../../assets/svgs/pen-solid.svg" alt="edit icon" />
+        <div class="editname">Edit</div>
+    </div>
+</div>
+<div class="flex-class">
+    <form class="personal-info-div">
+        <div class="personal-info">
+            <div class="data-div">
+                <div class="label">First Name*</div>
+                <div class="text">{{UserData.PersonalInformation.FirstName}}</div>
+                <!-- <input type="text" class="text-input" placeholder="Enter First Name" /> -->
+            </div>
+            <div class="data-div">
+                <div class="label">Last Name*</div>
+                <div class="text">{{UserData.PersonalInformation.LastName}}</div>
+                <!-- <input type="text" class="text-input" placeholder="Enter Last Name"> -->
+            </div>
+            <div class="data-div">
+                <div class="label">Email*</div>
+                <div class="text">{{UserData.PersonalInformation.Email}}</div>
+                <!-- <input type="text" class="text-input" placeholder="Enter Email"> -->
+            </div>
+            <div class="data-div">
+                <div class="label">Phone Number*</div>
+                <div class="number-div">
+                    <div class="plus">+</div>
+                    <div class="text left">{{UserData.PersonalInformation.countryCode}}</div>
+                    <div class="text left">{{UserData.PersonalInformation.PhoneNumber}}</div>
+                    <!-- <input type="tel" title="code" placeholder="" class="code-input" />
+                    <input type="tel" title="number" placeholder="" class="phone-input" /> -->
+                </div>
+            </div>
+            <label class="data-div upload-resume-div" tabindex="0" for="resume-input">
+                <img src="../../../assets/svgs/Upload_24dp.svg" alt="upload" class="upload-svg">
+                <input type="file" class="resume-input" tabindex="1" accept="application/pdf" id="resume-input" />
+                <div class="upload-label">Upload Resume</div>
+                <input class="file-name" placeholder="{{UserData.PersonalInformation.ResumeFileName}}" disabled />
+            </label>
+            <div class="data-div">
+                <div class="label">Enter Portfolio URL(if any)</div>
+                <div class="text">{{UserData.PersonalInformation.PortfolioURL}}</div>
+                <!-- <input type="text" class="text-input" placeholder="Enter URL"> -->
+            </div>
+            <div class="data-div">
+                <div class="label bottom2">Preferred Job Roles*</div>
+
+                <div class="roles-options bottom" *ngFor="let role of UserData.PersonalInformation.PreferredJobRoles">
+                    <div class="roles-options">
+                        <!-- <input type="checkbox" id="{{role}}" class="roles-checkbox"> -->
+                        <label for="{{role}}" class="roles-label">{{role}}</label><br>
+                    </div>
+                </div>
+                <!-- <div class="roles-options">
+                    <input type="checkbox" id="instructionalDesigner" class="roles-checkbox">
+                    <label for="instructionalDesigner" class="roles-label">Instructional Designer</label><br>
+                </div>
+                <div class="roles-options">
+                    <input type="checkbox" id="softwareEngineer" class="roles-checkbox">
+                    <label for="softwareEngineer" class="roles-label">Software Engineer</label><br>
+                </div>
+                <div class="roles-options">
+                    <input type="checkbox" id="softwareQualityEngineer" class="roles-checkbox">
+                    <label for="softwareQualityEngineer" class="roles-label">Software Quality Engineer</label>
+                </div> -->
+            </div>
+            <div class="data-div">
+                <div class="label">If You Are Registering Via A Referral, Please Mention Full Name Of The Employee Who
+                    Referred You</div>
+                <div class="text">{{UserData.PersonalInformation.Referral}}</div>
+                <!-- <input type="text" title="Referral" placeholder="" class="text-input" /> -->
+            </div>
+            <div class="sendmeupdates-div" *ngIf="UserData.PersonalInformation.sendemail">
+                <input type="checkbox" id="sendmeupdates" class="updates-checkbox black" checked disabled>
+                <label for="sendmeupdates" class="updates-label">Send me job related updates via mail</label>
+            </div>
+            <div class="sendmeupdates-div" *ngIf="!UserData.PersonalInformation.sendemail">
+                <input type="checkbox" id="sendmeupdates" class="updates-checkbox black" disabled>
+                <label for="sendmeupdates" class="updates-label">Send me job related updates via mail</label>
+            </div>
+
+        </div>
+        <div class="photo-upload">
+            <div class="flex-div">
+                <img [src]=profilePhotoSrc alt="default-profile-photo"
+                    tabindex="" class="profile-photo" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="containerTitle">
+    <div class="title">Qualifications</div>
+    <div class="editcontainer">
+        <img class="penicon" src="../../../assets/svgs/pen-solid.svg" alt="edit icon" />
+        <div class="editname">Edit</div>
+    </div>
+</div>
+<div class="edblueline">
+    <div class="edtitle">Educational Qualifications</div>
+    <!-- <div class="verline">
+
+    </div> -->
+    <!-- <img class="uparrow" src="/assets/svgs/chevron-up-solid.svg" alt="up arrow" /> -->
+</div>
+<div class="Edqualifications">
+    <div class="data-div1">
+        <div class="label">Aggregate Percentage*</div>
+        <div class="text">{{UserData.Qualifications.EducationalQualifications.Percentage}}</div>
+        <!-- <input type="number" class="text-input num" [(ngModel)]="educational.Percentage"
+            (change)="updateEduQualificationInfo()" placeholder="Enter Percentage"> -->
+    </div>
+    <div class="data-div1">
+        <div class="label">Year of Passing*</div>
+        <div class="text">{{UserData.Qualifications.EducationalQualifications.YearOfPassing}}</div>
+        <!-- <select required="true" class="customInput arrow" [(ngModel)]="educational.YearOfPassing"
+            (change)="updateEduQualificationInfo()" name="state">
+            <option class="option" value="" selected>2020</option>
+            <option class="option" value="2019">2019</option>
+            <option value="2018" class="option">2018</option>
+            <option value="2017" class="option">2017</option>
+            <option value="2016" class="option">2016</option>
+        </select> -->
+        <!-- <input type="text" class="text-input" placeholder="Enter year"> -->
+    </div>
+    <div class="data-container">
+        <div class="data-div">
+            <div class="label">Qualification*</div>
+            <div class="text">{{UserData.Qualifications.EducationalQualifications.Qualification}}</div>
+            <!-- <select required="true" class="customInput customInput1 arrow" [(ngModel)]="educational.Qualification"
+                (change)="updateEduQualificationInfo()" name="state">
+                <option class="option" value="" selected>Bachelor in Technology (B.Tech)</option>
+                <option class="option" value="2019">2019</option>
+                <option value="2018" class="option">2018</option>
+                <option value="2017" class="option">2017</option>
+                <option value="2016" class="option">2016</option>
+            </select> -->
+            <!-- <input type="text" class="text-input" placeholder="Enter Degree"> -->
+        </div>
+        <div class="data-div">
+            <div class="label">Stream*</div>
+            <div class="text">{{UserData.Qualifications.EducationalQualifications.Stream}}</div>
+            <!-- <select required="true" class="customInput customInput1 arrow" [(ngModel)]="educational.Stream"
+                (change)="updateEduQualificationInfo()" name="state">
+                <option class="option" value="" selected>Information Technology</option>
+                <option class="option" value="2019">2019</option>
+                <option value="2018" class="option">2018</option>
+                <option value="2017" class="option">2017</option>
+                <option value="2016" class="option">2016</option>
+            </select> -->
+            <!-- <input type="text" class="text-input" placeholder="Enter Stream"> -->
+        </div>
+    </div>
+    <div class="data-container">
+        <div class="data-div">
+            <div class="label">College*</div>
+            <div class="text">{{UserData.Qualifications.EducationalQualifications.College}}</div>
+            <!-- <select required="true" class="customInput customInput1 arrow" [(ngModel)]="educational.College"
+                (change)="updateEduQualificationInfo()" name="state">
+                <option class="option" value="" selected>Pune Institute of Technology (PIT)</option>
+                <option class="option" value="2019">2019</option>
+                <option value="2018" class="option">2018</option>
+                <option value="2017" class="option">2017</option>
+                <option value="2016" class="option">2016</option>
+            </select> -->
+            <!-- <input type="text" class="text-input" placeholder="Enter College"> -->
+        </div>
+        <div class="data-div">
+            <div class="label">If others, please enter your college name</div>
+            <div class="text">{{UserData.Qualifications.EducationalQualifications.otherCollege}}</div>
+            <!-- <input type="text" class="text-input" placeholder="Enter College" [(ngModel)]="educational.otherCollege"
+                (change)="updateEduQualificationInfo()" /> -->
+        </div>
+    </div>
+    <div class="data-div1">
+        <div class="label">Where is your college located?*</div>
+        <div class="text">{{UserData.Qualifications.EducationalQualifications.collegeLocation}}</div>
+        <!-- <input type="text" class="text-input" placeholder="Enter City" [(ngModel)]="educational.collegeLocation"
+            (change)="updateEduQualificationInfo()" /> -->
+    </div>
+</div>
+<div class="problueline">
+    <div class="protitle">Professional Qualifications</div>
+    <!-- <div class="verline">
+
+    </div> -->
+    <!-- <img class="uparrow" src="/assets/svgs/chevron-up-solid.svg" alt="up arrow" /> -->
+    <!-- <img class="downarrow" src="/assets/svgs/chevron-down-solid.svg" alt="up arrow" /> -->
+</div>
+<div class="proqualifications1">
+    <div class="label">Applicant Type*</div>
+    <div class="application-type text">{{UserData.Qualifications.ProfessionalQualifications.ApplicantType}}</div>
+    <!-- <label class="application-type">
+        <input type="radio" class="radio Applicanttype1" name="Applicant" value="Fresher"
+            [(ngModel)]="Fresherinfo.ApplicantType" (change)="updateApplicantInfo('Fresher')" />
+        <p class="type label1">Fresher</p>
+        <input type="radio" class="radio Applicanttype2" name="Applicant" value="Experienced"
+            [(ngModel)]="experienceinfo.ApplicantType" (change)="updateApplicantInfo('Experienced')" />
+        <p class="type label2">Experienced</p>
+
+    </label> -->
+</div>
+<div class="proqualifications"
+    *ngIf="UserData.Qualifications.ProfessionalQualifications.ApplicantType === 'Experienced'">
+    <div class="data-div1">
+        <div class="label">Years of Experience*</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.YearsOfExperience}}</div>
+        <!-- <input type="number" name="yearOfExp" class="text-input num" placeholder="Enter Percentage"
+            [(ngModel)]="experienceinfo.YearsOfExperience" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+    <div class="data-div1">
+        <div class="label">Current CTC* (In Rupees)</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.CurrentCTC}}</div>
+        <!-- <input type="text" name="currentCTC" class="text-input" placeholder="Enter CTC"
+            [(ngModel)]="experienceinfo.CurrentCTC" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+    <div class="data-div1">
+        <div class="label">Expected CTC* (In Rupees)</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.ExpectedCTC}}</div>
+        <!-- <input type="text" name="expectedCTC" class="text-input" placeholder="Enter CTC"
+            [(ngModel)]="experienceinfo.ExpectedCTC" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Expertise In*</div>
+        <div class="roles-options"
+            *ngFor="let tech of UserData.Qualifications.ProfessionalQualifications.TechExpertized">
+            <!-- <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                (change)="toggleExpertiseTech('Javascript')" /> -->
+            <div class="text">{{tech}}</div>
+        </div>
+        <!-- <div class="roles-options">
+            <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                (change)="toggleExpertiseTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div> -->
+        <!-- <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleExpertiseTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleExpertiseTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleExpertiseTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleExpertiseTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div> -->
+    </div>
+    <div class="data-div">
+        <div class="label">If others, please mention</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.OtherTechExpertized}}</div>
+        <!-- <input type="text" name="inputTech" class="text-input" placeholder="Enter Tech"
+            [(ngModel)]="experienceinfo.OtherTechExpertized" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Are Familiar In</div>
+        <div class="roles-options" *ngFor="let tech of UserData.Qualifications.ProfessionalQualifications.TechFamiliar">
+            <!-- <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                        (change)="toggleExpertiseTech('Javascript')" /> -->
+            <div class="text">{{tech}}</div>
+        </div>
+        <!-- <div class="roles-options">
+            <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                (change)="toggleFamiliarTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleFamiliarTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleFamiliarTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleFamiliarTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleFamiliarTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div> -->
+    </div>
+    <div class="data-div">
+        <label for="inputTech2" class="label">If others, please mention</label>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.OtherTechFamiliar}}</div>
+        <!-- <input type="text" id="inputTech2" class="text-input" placeholder=""
+            [(ngModel)]="experienceinfo.OtherTechFamiliar" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+    <div class="data-div nobottom">
+
+        <div class="label">Are you currently on notice period?*</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.NoticePeriod}}</div>
+        <!-- <label class="application-type">
+            <input type="radio" class="radio" name="notice" value="Yes" [(ngModel)]="experienceinfo.NoticePeriod"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label1">Yes</p>
+            <input type="radio" class="radio" name="notice" value="No" [(ngModel)]="experienceinfo.NoticePeriod"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label2">No</p>
+        </label> -->
+    </div>
+
+    <div class="data-div">
+        <label for="noticeperiod" class="label">If Yes, when will your notice period end?*</label>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.NoticePeriodEndDate}}</div>
+        <!-- <input type="date" id="noticeperiod" class="text-input" placeholder=""
+            [(ngModel)]="experienceinfo.NoticePeriodEndDate" (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+    <div class="data-div nobottom">
+        <div class="label">Have You Appeared For Any Test By Zeus in the past 12 months?*</div>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.AppearedIn}}</div>
+        <!-- <label class="application-type">
+            <input type="radio" class="radio" name="test" value="Yes" [(ngModel)]="experienceinfo.AppearedIn"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label1">Yes</p>
+            <input type="radio" class="radio" name="test" value="No" [(ngModel)]="experienceinfo.AppearedIn"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label2">No</p>
+        </label> -->
+    </div>
+
+    <div class="data-div">
+        <label for="jobrole" class="label">If Yes, which role did you apply for?</label>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.RoleAppearedIn}}</div>
+        <!-- <input type="text" id="jobrole" class="text-input" placeholder="" [(ngModel)]="experienceinfo.RoleAppearedIn"
+            (change)="updateApplicantInfo('Experienced')" /> -->
+    </div>
+</div>
+
+<div class="fresherqualifications"
+    *ngIf="UserData.Qualifications.ProfessionalQualifications.ApplicantType === 'Fresher'">
+
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Are Familiar In</div>
+        <div class="roles-options" *ngFor="let tech of UserData.Qualifications.ProfessionalQualifications.TechFamiliar">
+            <!-- <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                                (change)="toggleExpertiseTech('Javascript')" /> -->
+            <div class="text">{{tech}}</div>
+        </div>
+        <!-- <div class="roles-options">
+            <input type="checkbox" id="Javascript" class="roles-checkbox" (change)="toggleFamiliarTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleFamiliarTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleFamiliarTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleFamiliarTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleFamiliarTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div> -->
+    </div>
+    <div class="data-div">
+        <label for="inputTech2" class="label">If others, please mention</label>
+        <div class="text">{{UserData.Qualifications.ProfessionalQualifications.OtherTechFamiliar}}</div>
+        <!-- <input type="text" id="inputTech2" class="text-input" placeholder="" [(ngModel)]="Fresherinfo.OtherTechFamiliar"
+            (change)="updateApplicantInfo('Fresher')" />
+    </div> -->
+        <div class="data-div nobottom">
+            <div class="label">Have You Appeared For Any Test By Zeus in the past 12 months?*</div>
+            <div class="text">{{UserData.Qualifications.ProfessionalQualifications.AppearedIn}}</div>
+            <!-- <label class="application-type">
+                <input type="radio" class="radio" name="test2" value="Yes" [(ngModel)]="Fresherinfo.AppearedIn"
+                    (change)="updateApplicantInfo('Fresher')" />
+                <p class="type label1">Yes</p>
+                <input type="radio" class="radio" name="test2" value="No" [(ngModel)]="Fresherinfo.AppearedIn"
+                    (change)="updateApplicantInfo('Fresher')" />
+                <p class="type label2">No</p>
+            </label> -->
+        </div>
+
+        <div class="data-div">
+            <label for="jobrole" class="label">If Yes, which role did you apply for?</label>
+            <div class="text">{{UserData.Qualifications.ProfessionalQualifications.RoleAppearedIn}}</div>
+            <!-- <input type="text" id="jobrole" class="text-input" placeholder="" [(ngModel)]="Fresherinfo.RoleAppearedIn"
+                (change)="updateApplicantInfo('Fresher')" /> -->
+        </div>
+    </div>
+</div>

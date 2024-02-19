@@ -1,0 +1,209 @@
+.flex-class {
+  display: flex;
+  flex-direction: column;
+}
+.flex-class .personal-info-div {
+  margin: 0 2.4rem 2.4rem 2.4rem;
+  padding: 2.4rem;
+  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: 480fr 450fr;
+}
+@media only screen and (max-width: 600px) {
+  .flex-class .personal-info-div {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+@media only screen and (max-width: 390px) {
+  .flex-class .personal-info-div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.flex-class .personal-info-div .personal-info .data-div {
+  margin-bottom: 4rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .label {
+  margin-left: 0.3rem;
+  color: rgba(102, 102, 102, 0.8);
+  -webkit-text-decoration: Titlecase;
+          text-decoration: Titlecase;
+  font-size: 1.2rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .text-input {
+  width: 100%;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .text-input ::-moz-placeholder {
+  opacity: 1;
+  color: #222222;
+}
+.flex-class .personal-info-div .personal-info .data-div .text-input ::placeholder {
+  color: #222222;
+}
+.flex-class .personal-info-div .personal-info .data-div .text-input:focus {
+  outline: none;
+}
+.flex-class .personal-info-div .personal-info .data-div .number-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.flex-class .personal-info-div .personal-info .data-div .plus {
+  font-size: 1.6rem;
+  align-items: center;
+}
+.flex-class .personal-info-div .personal-info .data-div .code-input {
+  width: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .code-input:focus {
+  outline: none;
+}
+.flex-class .personal-info-div .personal-info .data-div .phone-input {
+  width: 9rem;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #222222;
+  border: none;
+  border-bottom: 0.2rem solid rgba(102, 102, 102, 0.2);
+  margin-top: 1.2rem;
+  margin-left: 0.8rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .phone-input:focus {
+  outline: none;
+}
+.flex-class .personal-info-div .personal-info .data-div .roles-options {
+  display: flex;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+.flex-class .personal-info-div .personal-info .data-div .roles-options .roles-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.flex-class .personal-info-div .personal-info .data-div .roles-options .roles-label {
+  font-size: 1.6rem;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div {
+  display: flex;
+  align-items: center;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div:hover {
+  cursor: pointer;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div:focus {
+  outline: 2px solid #1f7a54; /* Example outline style */
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div .upload-svg {
+  width: 2rem;
+  height: 2.4rem;
+  margin-right: 0.8rem;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div .resume-input {
+  display: none;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div .upload-label {
+  letter-spacing: 0px;
+  color: #1f7a54;
+  text-transform: uppercase;
+  opacity: 1;
+  font-weight: 100;
+  color: #1f7a54;
+  font-size: 1.4rem;
+}
+.flex-class .personal-info-div .personal-info .upload-resume-div .file-name {
+  height: 100%;
+  overflow: hidden;
+  color: rgba(102, 102, 102, 0.8);
+  font-size: 1.2rem;
+  margin-left: 0.8rem;
+  flex: 1;
+  border: none;
+  background-color: #ffffff;
+}
+.flex-class .personal-info-div .personal-info .sendmeupdates-div {
+  display: flex;
+  align-items: center;
+}
+.flex-class .personal-info-div .personal-info .sendmeupdates-div .updates-checkbox {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.8rem;
+  accent-color: #1f7a54;
+}
+.flex-class .personal-info-div .personal-info .sendmeupdates-div .updates-label {
+  font-size: 1.6rem;
+}
+.flex-class .personal-info-div .photo-upload {
+  margin-left: auto;
+}
+.flex-class .personal-info-div .photo-upload .flex-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 18.6rem;
+}
+.flex-class .personal-info-div .photo-upload .flex-div .profile-photo {
+  width: 11.2rem;
+  height: 11.2rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  overflow: hidden;
+}
+.flex-class .personal-info-div .photo-upload .flex-div .photo-input-label {
+  cursor: pointer;
+  margin: 1.6rem 0 0.9rem 0;
+  font-size: 1.2rem;
+  letter-spacing: 0px;
+  color: #1f7a54;
+  opacity: 1;
+}
+.flex-class .personal-info-div .photo-upload .flex-div .photo-input-label .photo-input {
+  display: none;
+}
+.flex-class .personal-info-div .photo-upload .flex-div .photo-input-label .upload-label {
+  color: #1f7a54;
+  font-size: 1.2rem;
+}
+@media only screen and (max-width: 400px) {
+  .flex-class .personal-info-div .photo-upload .flex-div .photo-input-label .upload-label {
+    font-size: 1rem;
+  }
+}
+.flex-class .personal-info-div .photo-upload .flex-div .input-desc {
+  color: rgba(102, 102, 102, 0.8);
+  font-size: 1rem;
+  font-weight: 100;
+}
+.flex-class .next-button {
+  background-color: #3fd28b;
+  color: #1f2834;
+  font-size: 1.4rem;
+  padding: 0.5rem 2.7rem;
+  border: none;
+  border-radius: 0.2rem;
+  box-shadow: 0rem 0.3rem 0.5rem rgba(0, 0, 0, 0.2392156863);
+  margin-bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.flex-class .next-button:hover {
+  cursor: pointer;
+  transform: translateY(-0.2em);
+}/*# sourceMappingURL=style.css.map */

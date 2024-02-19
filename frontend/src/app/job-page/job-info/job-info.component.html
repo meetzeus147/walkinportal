@@ -1,0 +1,111 @@
+<div class="job-info-container" *ngFor="let job of Jobs">
+    <div class="job-info-if" *ngIf="job.JobId==jobid">
+
+        <!-- <div class="job-info-div">
+            <div class="job-title-div">
+                <div class="job-title">{{job.job_name}}</div>
+                <button class="apply-button">APPLY</button>
+            </div>
+            <div class="date-time-div">
+                Date & Time :
+                <div class="date-time-line">
+                    <div class="date-time">{{job.from_time}} to {{job.to_time}}</div>
+                    <div class="pipe">|</div>
+                    <img class="location-pin-icon" src="../../../assets/svgs/location_on_black_24dp.svg" alt="location">
+                    <div class="job-location">{{job.location_name}}</div>
+                </div>
+            </div>
+            <div class="line-seperator"></div>
+            <div class="job-roles">
+                <div class="role-name" *ngFor="let role of job?.roles">{{role['role_name']}}</div>
+            </div>
+        </div> -->
+        <div class="JobContainer">
+            <div class="JobTitle">
+                {{job.JobTitle}}
+            </div>
+            <div class="JobDateLocationContainer">
+                <label for="JobDate" class="JobDateLabel">Date & Time :</label>
+                <div class="JobDate">
+                    <div class="JobDateTime">{{formatdate(job.JobStartDate)}} to {{formatdate(job.JobEndDate)}}</div>
+                    <div class="verticalline"></div>
+                    <div class="JobLocation">
+                        <img src="/assets/svgs/location-dot-solid.svg" class="locimg" alt="locationicon" />
+                        <div class="locationname">
+                            {{job.JobLocation}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="DividingLine"></div>
+            <div class="JobRoleContainer">
+                <label class="JobRoleLabel">Job Roles :</label>
+                <div class="RoleContainer">
+                    <div class="JobRole" *ngFor="let role of job.JobRoles; let last = last">
+                        <img src="/assets/{{role.JobRoleName}}.png" class="JobRoleImage" alt="" />
+                        <div class="JobRoleName">{{role.JobRoleName}}</div>
+                        <div class="verticalline2" *ngIf="!last"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="JobSpecialMessage" *ngIf="job.JobSpecialMessage">
+                {{job.JobSpecialMessage}}</div>
+            <div class="expireDate" *ngIf="job.JobExpiringRemainingDays>0">Expire in {{job.JobExpiringRemainingDays}}
+                days</div>
+            <button class="apply-button" (click)="emitData()"
+                [routerLink]="['/jobs/',job.JobId,applications.ApplicationId]">APPLY</button>
+
+
+        </div>
+        <div class="pre-requisite-div">
+            <div class="pre-req-header" (click)="toggleExpansion()">
+                <div class="pre-req-title">Pre-requisites & Application Process</div>
+                <div class="expand-icon"><img src="../../../assets/svgs/expand_less_black_24dp.svg" alt="expand"
+                        class="rotated-image" [class.rotated]="!isNotExpanded"></div>
+            </div>
+            <div class="job-pre-requisite" [class.invisible]="isNotExpanded" [class.visible]="!isNotExpanded">
+                <div class="desc-title" *ngFor="let req of job.JobDescription">
+                    {{req.DescriptionTitle}} : <div class="desc" [innerText]="req.Description"></div>
+                    <div class="line-seperator"></div>
+                </div>
+            </div>
+        </div>
+        <div class="preference-div">
+            <div class="preference-title">Time Slots & Preferences</div>
+            <div class="time-slots-div">
+                Select a Time Slot :
+                <div class="slot" *ngFor="let slot of job?.JobTimeSlots;let i = index">
+                    <input type="radio" class="slot-input" id="slot"
+                        [value]="convertTo12HourFormat(slot.StartTime) + ' to ' + convertTo12HourFormat(slot.EndTime)"
+                        name="slots" [(ngModel)]="applications.SelectedTimeSlots" />
+                    <label for="slot" class="slot-label">
+                        {{convertTo12HourFormat(slot.StartTime)}} to {{convertTo12HourFormat(slot.EndTime)}}
+                    </label>
+                </div>
+            </div>
+            <div class="line-seperator"></div>
+            <div class="roles-div">
+                Select Your Preference :
+                <div class="role" *ngFor="let role of job?.JobRoles">
+                    <input type="checkbox" name="roles" id="role" class="role-input"
+                        (change)="toggleJobRole(role.JobRoleName)" />
+                    <label for="role" class="role-label">{{role.JobRoleName}}</label>
+                </div>
+            </div>
+            <div class="line-seperator"></div>
+            <label class="upload-resume-div" (change)="uploadResume($event)" for="resume-input">
+                <img src="../../../assets/svgs/Upload_24dp.svg" alt="upload" class="upload-svg">
+                <input type="file" class="resume-input" accept="application/pdf" id="resume-input"
+                    [(ngModel)]="applications.UploadedResume">
+                <div class="upload-label">Upload Updated Resume</div>
+                <input class="file-name" placeholder="{{fileName}}" disabled>
+            </label>
+        </div>
+        <div *ngFor="let role of job?.JobRoles" class="roles-desc-div">
+            <app-roles-offered [role]="role"></app-roles-offered>
+        </div>
+    </div>
+</div>
+
+<!-- <app-applied></app-applied> -->

@@ -1,0 +1,184 @@
+<div class="problueline">
+    <div class="protitle">Professional Qualifications</div>
+    <!-- <div class="verline">
+
+    </div> -->
+    <img class="uparrow" src="/assets/svgs/chevron-up-solid.svg" alt="up arrow" />
+    <!-- <img class="downarrow" src="/assets/svgs/chevron-down-solid.svg" alt="up arrow" /> -->
+</div>
+<div class="proqualifications1">
+    <div class="label">Applicant Type*</div>
+    <label class="application-type">
+        <input type="radio" class="radio Applicanttype1" name="Applicant" value="Fresher"
+            [(ngModel)]="Fresherinfo.ApplicantType" (change)="updateApplicantInfo('Fresher')" />
+        <p class="type label1">Fresher</p>
+        <input type="radio" class="radio Applicanttype2" name="Applicant" value="Experienced"
+            [(ngModel)]="experienceinfo.ApplicantType" (change)="updateApplicantInfo('Experienced')" />
+        <p class="type label2">Experienced</p>
+    </label>
+</div>
+<div class="proqualifications">
+    <div class="data-div1">
+        <div class="label">Years of Experience*</div>
+        <input type="number" name="yearOfExp" class="text-input num" placeholder="Enter Percentage"
+            [(ngModel)]="experienceinfo.YearsOfExperience" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+    <div class="data-div1">
+        <div class="label">Current CTC* (In Rupees)</div>
+        <input type="text" name="currentCTC" class="text-input" placeholder="Enter CTC"
+            [(ngModel)]="experienceinfo.CurrentCTC" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+    <div class="data-div1">
+        <div class="label">Expected CTC* (In Rupees)</div>
+        <input type="text" name="expectedCTC" class="text-input" placeholder="Enter CTC"
+            [(ngModel)]="experienceinfo.ExpectedCTC" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Expertise In*</div>
+        <div class="roles-options">
+            <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                (change)="toggleExpertiseTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleExpertiseTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleExpertiseTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleExpertiseTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleExpertiseTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div>
+    </div>
+    <div class="data-div">
+        <div class="label">If others, please mention</div>
+        <input type="text" name="inputTech" class="text-input" placeholder="Enter Tech"
+            [(ngModel)]="experienceinfo.OtherTechExpertized" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Are Familiar In</div>
+        <div class="roles-options">
+            <input type="checkbox" name="js" id="Javascript" class="roles-checkbox"
+                (change)="toggleFamiliarTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleFamiliarTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleFamiliarTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleFamiliarTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleFamiliarTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div>
+    </div>
+    <div class="data-div">
+        <label for="inputTech2" class="label">If others, please mention</label>
+        <input type="text" id="inputTech2" class="text-input" placeholder=""
+            [(ngModel)]="experienceinfo.OtherTechFamiliar" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+    <div class="data-div nobottom">
+
+        <div class="label">Are you currently on notice period?*</div>
+        <label class="application-type">
+            <input type="radio" class="radio" name="notice" value="Yes" [(ngModel)]="experienceinfo.NoticePeriod"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label1">Yes</p>
+            <input type="radio" class="radio" name="notice" value="No" [(ngModel)]="experienceinfo.NoticePeriod"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label2">No</p>
+        </label>
+    </div>
+
+    <div class="data-div">
+        <label for="noticeperiod" class="label">If Yes, when will your notice period end?*</label>
+        <input type="date" id="noticeperiod" class="text-input" placeholder=""
+            [(ngModel)]="experienceinfo.NoticePeriodEndDate" (change)="updateApplicantInfo('Experienced')" />
+    </div>
+    <div class="data-div nobottom">
+        <div class="label">Have You Appeared For Any Test By Zeus in the past 12 months?*</div>
+        <label class="application-type">
+            <input type="radio" class="radio" name="test" value="Yes" [(ngModel)]="experienceinfo.AppearedIn"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label1">Yes</p>
+            <input type="radio" class="radio" name="test" value="No" [(ngModel)]="experienceinfo.AppearedIn"
+                (change)="updateApplicantInfo('Experienced')" />
+            <p class="type label2">No</p>
+        </label>
+    </div>
+
+    <div class="data-div">
+        <label for="jobrole" class="label">If Yes, which role did you apply for?</label>
+        <input type="text" id="jobrole" class="text-input" placeholder="" [(ngModel)]="experienceinfo.RoleAppearedIn"
+            (change)="updateApplicantInfo('Experienced')" />
+    </div>
+</div>
+
+<div class="fresherqualifications">
+
+    <div class="data-div">
+        <div class="label">Select All The Technologies You Are Familiar In</div>
+        <div class="roles-options">
+            <input type="checkbox" id="Javascript" class="roles-checkbox" (change)="toggleFamiliarTech('Javascript')" />
+            <label for="Javascript" class="roles-label">Javascript</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="AngularJS" class="roles-checkbox" (change)="toggleFamiliarTech('Angular JS')" />
+            <label for="AngularJS" class="roles-label">Angular JS</label><br>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="React" class="roles-checkbox" (change)="toggleFamiliarTech('React')" />
+            <label for="React" class="roles-label">React</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="NodeJS" class="roles-checkbox" (change)="toggleFamiliarTech('Node JS')" />
+            <label for="NodeJS" class="roles-label">Node JS</label>
+        </div>
+        <div class="roles-options">
+            <input type="checkbox" id="Others" class="roles-checkbox" (change)="toggleFamiliarTech('Others')" />
+            <label for="Others" class="roles-label">Others</label>
+        </div>
+    </div>
+    <div class="data-div">
+        <label for="inputTech2" class="label">If others, please mention</label>
+        <input type="text" id="inputTech2" class="text-input" placeholder="" [(ngModel)]="Fresherinfo.OtherTechFamiliar"
+            (change)="updateApplicantInfo('Fresher')" />
+    </div>
+    <div class="data-div nobottom">
+        <div class="label">Have You Appeared For Any Test By Zeus in the past 12 months?*</div>
+        <label class="application-type">
+            <input type="radio" class="radio" name="test2" value="Yes" [(ngModel)]="Fresherinfo.AppearedIn"
+                (change)="updateApplicantInfo('Fresher')" />
+            <p class="type label1">Yes</p>
+            <input type="radio" class="radio" name="test2" value="No" [(ngModel)]="Fresherinfo.AppearedIn"
+                (change)="updateApplicantInfo('Fresher')" />
+            <p class="type label2">No</p>
+        </label>
+    </div>
+
+    <div class="data-div">
+        <label for="jobrole" class="label">If Yes, which role did you apply for?</label>
+        <input type="text" id="jobrole" class="text-input" placeholder="" [(ngModel)]="Fresherinfo.RoleAppearedIn"
+            (change)="updateApplicantInfo('Fresher')" />
+    </div>
+</div>
+<!-- <div class="buttonContainer">
+
+    <button class="next-button">PREVIOUS</button>
+    <button class="next-button">NEXT</button>
+</div> -->
