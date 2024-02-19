@@ -18,6 +18,7 @@ namespace backend.Models
         public string ReferalEmpName { get; set; }
         public sbyte? SendMeUpdate { get; set; }
         public int UserId { get; set; }
+        public int Countrycode { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 

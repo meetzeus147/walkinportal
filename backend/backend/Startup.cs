@@ -1,4 +1,5 @@
-using backend.Data;
+using backend.Models;
+using backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,9 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MySql.EntityFrameworkCore.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace backend
@@ -35,9 +38,18 @@ namespace backend
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
             });
             var connectionString = Configuration.GetConnectionString("dbConnectionString");
-            services.AddDbContext<ApplicationDbContext>(options => 
+            services.AddDbContext<walkinportalContext>(options => 
                 options.UseMySQL(connectionString)
             );
+
+
+            //services.AddControllers().AddJsonOptions(x =>
+            //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

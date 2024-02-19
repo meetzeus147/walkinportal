@@ -114,22 +114,22 @@ namespace backend.Models
 
             modelBuilder.Entity<ApplicationRole>(entity =>
             {
-                entity.HasKey(e => new { e.ApplicationId, e.RoleId })
+                entity.HasKey(e => new { e.RoleId, e.ApplicationId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("application_roles");
 
-                entity.HasIndex(e => e.ApplicationId, "fk_application_roles_application1_idx");
+                entity.HasIndex(e => e.ApplicationId, "fk_roles_has_application_application1_idx");
 
-                entity.HasIndex(e => e.RoleId, "fk_application_roles_roles1_idx");
-
-                entity.Property(e => e.ApplicationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("application_id");
+                entity.HasIndex(e => e.RoleId, "fk_roles_has_application_roles1_idx");
 
                 entity.Property(e => e.RoleId)
                     .HasColumnType("int(11)")
                     .HasColumnName("role_id");
+
+                entity.Property(e => e.ApplicationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("application_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -146,13 +146,13 @@ namespace backend.Models
                     .WithMany(p => p.ApplicationRoles)
                     .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_application_roles_application1");
+                    .HasConstraintName("fk_roles_has_application_application1");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.ApplicationRoles)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_application_roles_roles1");
+                    .HasConstraintName("fk_roles_has_application_roles1");
             });
 
             modelBuilder.Entity<ApplicationType>(entity =>
@@ -481,22 +481,22 @@ namespace backend.Models
 
             modelBuilder.Entity<JobSlot>(entity =>
             {
-                entity.HasKey(e => new { e.JobId, e.SlotId })
+                entity.HasKey(e => new { e.SlotId, e.JobId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("job_slots");
 
-                entity.HasIndex(e => e.JobId, "fk_job_slots_jobs1_idx");
+                entity.HasIndex(e => e.JobId, "fk_slots_has_jobs_jobs1_idx");
 
-                entity.HasIndex(e => e.SlotId, "fk_job_slots_slots1_idx");
-
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.HasIndex(e => e.SlotId, "fk_slots_has_jobs_slots1_idx");
 
                 entity.Property(e => e.SlotId)
                     .HasColumnType("int(11)")
                     .HasColumnName("slot_id");
+
+                entity.Property(e => e.JobId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("job_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -513,13 +513,13 @@ namespace backend.Models
                     .WithMany(p => p.JobSlots)
                     .HasForeignKey(d => d.JobId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_job_slots_jobs1");
+                    .HasConstraintName("fk_slots_has_jobs_jobs1");
 
                 entity.HasOne(d => d.Slot)
                     .WithMany(p => p.JobSlots)
                     .HasForeignKey(d => d.SlotId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_job_slots_slots1");
+                    .HasConstraintName("fk_slots_has_jobs_slots1");
             });
 
             modelBuilder.Entity<Location>(entity =>
@@ -627,22 +627,22 @@ namespace backend.Models
 
             modelBuilder.Entity<ProqualificationExperttech>(entity =>
             {
-                entity.HasKey(e => new { e.ProqualificationId, e.TechId })
+                entity.HasKey(e => new { e.TechId, e.ProqualificationId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("proqualification_experttechs");
 
-                entity.HasIndex(e => e.ProqualificationId, "fk_proqualification_experttechs_proqualification1_idx");
+                entity.HasIndex(e => e.ProqualificationId, "fk_techs_has_proqualification_proqualification1_idx");
 
-                entity.HasIndex(e => e.TechId, "fk_proqualification_experttechs_techs1_idx");
-
-                entity.Property(e => e.ProqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("proqualification_id");
+                entity.HasIndex(e => e.TechId, "fk_techs_has_proqualification_techs1_idx");
 
                 entity.Property(e => e.TechId)
                     .HasColumnType("int(11)")
                     .HasColumnName("tech_id");
+
+                entity.Property(e => e.ProqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("proqualification_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -659,33 +659,33 @@ namespace backend.Models
                     .WithMany(p => p.ProqualificationExpertteches)
                     .HasForeignKey(d => d.ProqualificationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_proqualification_experttechs_proqualification1");
+                    .HasConstraintName("fk_techs_has_proqualification_proqualification1");
 
                 entity.HasOne(d => d.Tech)
                     .WithMany(p => p.ProqualificationExpertteches)
                     .HasForeignKey(d => d.TechId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_proqualification_experttechs_techs1");
+                    .HasConstraintName("fk_techs_has_proqualification_techs1");
             });
 
             modelBuilder.Entity<ProqualificationFamiliartech>(entity =>
             {
-                entity.HasKey(e => new { e.ProqualificationId, e.TechId })
+                entity.HasKey(e => new { e.TechId, e.ProqualificationId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("proqualification_familiartechs");
 
-                entity.HasIndex(e => e.ProqualificationId, "fk_proqualification_familiartechs_proqualification1_idx");
+                entity.HasIndex(e => e.ProqualificationId, "fk_techs_has_proqualification_proqualification2_idx");
 
-                entity.HasIndex(e => e.TechId, "fk_proqualification_familiartechs_techs1_idx");
-
-                entity.Property(e => e.ProqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("proqualification_id");
+                entity.HasIndex(e => e.TechId, "fk_techs_has_proqualification_techs2_idx");
 
                 entity.Property(e => e.TechId)
                     .HasColumnType("int(11)")
                     .HasColumnName("tech_id");
+
+                entity.Property(e => e.ProqualificationId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("proqualification_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -702,13 +702,13 @@ namespace backend.Models
                     .WithMany(p => p.ProqualificationFamiliarteches)
                     .HasForeignKey(d => d.ProqualificationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_proqualification_familiartechs_proqualification1");
+                    .HasConstraintName("fk_techs_has_proqualification_proqualification2");
 
                 entity.HasOne(d => d.Tech)
                     .WithMany(p => p.ProqualificationFamiliarteches)
                     .HasForeignKey(d => d.TechId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_proqualification_familiartechs_techs1");
+                    .HasConstraintName("fk_techs_has_proqualification_techs2");
             });
 
             modelBuilder.Entity<Qualification>(entity =>
@@ -930,6 +930,10 @@ namespace backend.Models
                     .HasColumnType("int(11)")
                     .HasColumnName("userdetail_id");
 
+                entity.Property(e => e.Countrycode)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("countrycode");
+
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
                     .HasColumnName("dt_created")
@@ -980,22 +984,22 @@ namespace backend.Models
 
             modelBuilder.Entity<UserdetailsRole>(entity =>
             {
-                entity.HasKey(e => new { e.UserdetailId, e.RoleId })
+                entity.HasKey(e => new { e.RoleId, e.UserdetailId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("userdetails_roles");
 
-                entity.HasIndex(e => e.RoleId, "fk_userdetails_roles_roles1_idx");
+                entity.HasIndex(e => e.RoleId, "fk_roles_has_userdetails_roles1_idx");
 
-                entity.HasIndex(e => e.UserdetailId, "fk_userdetails_roles_userdetails1_idx");
-
-                entity.Property(e => e.UserdetailId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("userdetail_id");
+                entity.HasIndex(e => e.UserdetailId, "fk_roles_has_userdetails_userdetails1_idx");
 
                 entity.Property(e => e.RoleId)
                     .HasColumnType("int(11)")
                     .HasColumnName("role_id");
+
+                entity.Property(e => e.UserdetailId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("userdetail_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -1012,13 +1016,13 @@ namespace backend.Models
                     .WithMany(p => p.UserdetailsRoles)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_userdetails_roles_roles1");
+                    .HasConstraintName("fk_roles_has_userdetails_roles1");
 
                 entity.HasOne(d => d.Userdetail)
                     .WithMany(p => p.UserdetailsRoles)
                     .HasForeignKey(d => d.UserdetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_userdetails_roles_userdetails1");
+                    .HasConstraintName("fk_roles_has_userdetails_userdetails1");
             });
 
             OnModelCreatingPartial(modelBuilder);
