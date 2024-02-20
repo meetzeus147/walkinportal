@@ -61,9 +61,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserId, "fk_application_users1_idx");
 
-                entity.Property(e => e.ApplicationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("application_id");
+                entity.Property(e => e.ApplicationId).HasColumnName("application_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -76,22 +74,17 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.Property(e => e.Hallticket).HasColumnName("hallticket");
+
+                entity.Property(e => e.JobId).HasColumnName("job_id");
 
                 entity.Property(e => e.Resume)
                     .IsRequired()
-                    .HasColumnType("blob")
                     .HasColumnName("resume");
 
-                entity.Property(e => e.SlotId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("slot_id");
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.Applications)
@@ -123,13 +116,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.RoleId, "fk_roles_has_application_roles1_idx");
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("role_id");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
 
-                entity.Property(e => e.ApplicationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("application_id");
+                entity.Property(e => e.ApplicationId).HasColumnName("application_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -162,9 +151,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.ApplicationTypeName, "application_type_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.ApplicationTypeId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("application_type_id");
+                entity.Property(e => e.ApplicationTypeId).HasColumnName("application_type_id");
 
                 entity.Property(e => e.ApplicationTypeName)
                     .IsRequired()
@@ -191,9 +178,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.LocationId, "fk_colleges_locations_idx");
 
-                entity.Property(e => e.CollegeId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("college_id");
+                entity.Property(e => e.CollegeId).HasColumnName("college_id");
 
                 entity.Property(e => e.CollegeName)
                     .IsRequired()
@@ -210,9 +195,7 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.LocationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("location_id");
+                entity.Property(e => e.LocationId).HasColumnName("location_id");
 
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.Colleges)
@@ -233,13 +216,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserId, "fk_edqualification_users1_idx");
 
-                entity.Property(e => e.EdqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("edqualification_id");
+                entity.Property(e => e.EdqualificationId).HasColumnName("edqualification_id");
 
-                entity.Property(e => e.CollegeId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("college_id");
+                entity.Property(e => e.CollegeId).HasColumnName("college_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -253,24 +232,18 @@ namespace backend.Models
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.PassingYear)
-                    .HasColumnType("year(4)")
+                    .HasColumnType("year")
                     .HasColumnName("passing_year");
 
                 entity.Property(e => e.Percentage)
                     .HasPrecision(5)
                     .HasColumnName("percentage");
 
-                entity.Property(e => e.QualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("qualification_id");
+                entity.Property(e => e.QualificationId).HasColumnName("qualification_id");
 
-                entity.Property(e => e.StreamId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("stream_id");
+                entity.Property(e => e.StreamId).HasColumnName("stream_id");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.College)
                     .WithMany(p => p.Edqualifications)
@@ -303,9 +276,11 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.LocationId, "fk_jobs_locations1_idx");
 
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.Property(e => e.JobId).HasColumnName("job_id");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -327,9 +302,7 @@ namespace backend.Models
                     .HasMaxLength(255)
                     .HasColumnName("job_name");
 
-                entity.Property(e => e.LocationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("location_id");
+                entity.Property(e => e.LocationId).HasColumnName("location_id");
 
                 entity.Property(e => e.ThingsToRemember)
                     .HasColumnType("text")
@@ -357,9 +330,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.JobId, "fk_job_desc_jobs1_idx");
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.DescTitle)
                     .HasMaxLength(255)
@@ -380,9 +351,7 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.Property(e => e.JobId).HasColumnName("job_id");
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.JobDescs)
@@ -399,9 +368,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.RoleId, "fk_job_roles_roles1_idx");
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -414,17 +381,13 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.Property(e => e.JobId).HasColumnName("job_id");
 
                 entity.Property(e => e.Package)
                     .HasPrecision(10)
                     .HasColumnName("package");
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("role_id");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.JobRoles)
@@ -445,9 +408,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.RolesId, "fk_job_roles_desc_job_roles1_idx");
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.DescTitle)
                     .HasMaxLength(255)
@@ -468,9 +429,7 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.RolesId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("roles_id");
+                entity.Property(e => e.RolesId).HasColumnName("roles_id");
 
                 entity.HasOne(d => d.Roles)
                     .WithMany(p => p.JobRolesDescs)
@@ -490,13 +449,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.SlotId, "fk_slots_has_jobs_slots1_idx");
 
-                entity.Property(e => e.SlotId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("slot_id");
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
 
-                entity.Property(e => e.JobId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("job_id");
+                entity.Property(e => e.JobId).HasColumnName("job_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -529,9 +484,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.LocationName, "location_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.LocationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("location_id");
+                entity.Property(e => e.LocationId).HasColumnName("location_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -557,25 +510,17 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserId, "fk_proqualification_users1_idx");
 
-                entity.Property(e => e.ProqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("proqualification_id");
+                entity.Property(e => e.ProqualificationId).HasColumnName("proqualification_id");
 
-                entity.Property(e => e.AppearedZeusTest)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("appeared_zeus_test");
+                entity.Property(e => e.AppearedZeusTest).HasColumnName("appeared_zeus_test");
 
-                entity.Property(e => e.ApplicationTypeId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("application_type_id");
+                entity.Property(e => e.ApplicationTypeId).HasColumnName("application_type_id");
 
                 entity.Property(e => e.CurrentCtc)
                     .HasPrecision(10)
                     .HasColumnName("current_ctc");
 
-                entity.Property(e => e.CurrentlyOnNoticePeriod)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("currently_on_notice_period");
+                entity.Property(e => e.CurrentlyOnNoticePeriod).HasColumnName("currently_on_notice_period");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -589,7 +534,7 @@ namespace backend.Models
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.ExpYear)
-                    .HasColumnType("year(4)")
+                    .HasColumnType("year")
                     .HasColumnName("exp_year");
 
                 entity.Property(e => e.ExpectedCtc)
@@ -600,13 +545,9 @@ namespace backend.Models
                     .HasColumnType("date")
                     .HasColumnName("notice_end");
 
-                entity.Property(e => e.NoticePeriodLength)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("notice_period_length");
+                entity.Property(e => e.NoticePeriodLength).HasColumnName("notice_period_length");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.ZeusTestRole)
                     .HasMaxLength(255)
@@ -636,13 +577,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.TechId, "fk_techs_has_proqualification_techs1_idx");
 
-                entity.Property(e => e.TechId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("tech_id");
+                entity.Property(e => e.TechId).HasColumnName("tech_id");
 
-                entity.Property(e => e.ProqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("proqualification_id");
+                entity.Property(e => e.ProqualificationId).HasColumnName("proqualification_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -679,13 +616,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.TechId, "fk_techs_has_proqualification_techs2_idx");
 
-                entity.Property(e => e.TechId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("tech_id");
+                entity.Property(e => e.TechId).HasColumnName("tech_id");
 
-                entity.Property(e => e.ProqualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("proqualification_id");
+                entity.Property(e => e.ProqualificationId).HasColumnName("proqualification_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -718,9 +651,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.QualificationName, "qualification_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.QualificationId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("qualification_id");
+                entity.Property(e => e.QualificationId).HasColumnName("qualification_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -745,9 +676,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.RoleName, "role_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("role_id");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -769,9 +698,7 @@ namespace backend.Models
             {
                 entity.ToTable("slots");
 
-                entity.Property(e => e.SlotId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("slot_id");
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -800,9 +727,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.StreamName, "stream_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.StreamId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("stream_id");
+                entity.Property(e => e.StreamId).HasColumnName("stream_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -827,9 +752,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.TechName, "tech_name_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.TechId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("tech_id");
+                entity.Property(e => e.TechId).HasColumnName("tech_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -854,9 +777,7 @@ namespace backend.Models
                 entity.HasIndex(e => e.Email, "email_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -885,9 +806,7 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserId, "fk_userassets_users1_idx");
 
-                entity.Property(e => e.UserassetId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("userasset_id");
+                entity.Property(e => e.UserassetId).HasColumnName("userasset_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -900,18 +819,13 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.ProfilePhoto)
-                    .HasColumnType("blob")
-                    .HasColumnName("profile_photo");
+                entity.Property(e => e.ProfilePhoto).HasColumnName("profile_photo");
 
                 entity.Property(e => e.Resume)
                     .IsRequired()
-                    .HasColumnType("blob")
                     .HasColumnName("resume");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Userassets)
@@ -926,13 +840,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserId, "fk_userdetails_users1_idx");
 
-                entity.Property(e => e.UserdetailId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("userdetail_id");
+                entity.Property(e => e.UserdetailId).HasColumnName("userdetail_id");
 
-                entity.Property(e => e.Countrycode)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("countrycode");
+                entity.Property(e => e.Countrycode).HasColumnName("countrycode");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")
@@ -967,13 +877,9 @@ namespace backend.Models
                     .HasMaxLength(255)
                     .HasColumnName("referal_emp_name");
 
-                entity.Property(e => e.SendMeUpdate)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("send_me_update");
+                entity.Property(e => e.SendMeUpdate).HasColumnName("send_me_update");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Userdetails)
@@ -993,13 +899,9 @@ namespace backend.Models
 
                 entity.HasIndex(e => e.UserdetailId, "fk_roles_has_userdetails_userdetails1_idx");
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("role_id");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
 
-                entity.Property(e => e.UserdetailId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("userdetail_id");
+                entity.Property(e => e.UserdetailId).HasColumnName("userdetail_id");
 
                 entity.Property(e => e.DtCreated)
                     .HasColumnType("datetime")

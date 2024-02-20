@@ -10,7 +10,7 @@ namespace backend.Dtos
             Rolesid = new HashSet<int>();
         }
 
-        public byte[] Resume { get; set; }
+        public string Resume { get; set; }
         public int UserId { get; set; }
         public int JobId { get; set; }
         public int SlotId { get; set; }

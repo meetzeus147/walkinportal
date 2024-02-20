@@ -20,6 +20,7 @@ namespace backend.Models
         public string Venue { get; set; }
         public string ThingsToRemember { get; set; }
         public int LocationId { get; set; }
+        public DateTime Date { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 

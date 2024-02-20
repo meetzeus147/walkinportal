@@ -11,10 +11,11 @@ namespace backend.Models
         }
 
         public int ApplicationId { get; set; }
-        public byte[] Resume { get; set; }
+        public string Resume { get; set; }
         public int UserId { get; set; }
         public int JobId { get; set; }
         public int SlotId { get; set; }
+        public string Hallticket { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 
