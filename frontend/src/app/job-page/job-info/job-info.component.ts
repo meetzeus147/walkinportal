@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { IApplicationInfo, IJobData } from '../JobData';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/shared/data.service';
+import { IApplicationRequest, IJob } from 'src/interface/interfaces';
+import { baseurl } from 'src/app/shared/url';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-job-info',
@@ -12,26 +14,55 @@ import { DataService } from 'src/app/shared/data.service';
   styleUrls: ['./job-info.component.scss'],
 })
 export class JobInfoComponent implements OnInit {
-  Jobs: IJobData[] = [];
-  selectedRoles: string[] = [];
-  applications: IApplicationInfo = {
-    ApplicationJobId: 0,
-    ApplicationId: Math.floor(Math.random() * 10000),
-    SelectedTimeSlots: '',
-    selectedRoles: [],
-    UploadedResume: null,
+
+  Job: IJob = {
+    jobId: 0,
+    jobName: '',
+    fromTime: new Date(),
+    toTime: new Date(),
+    venue: '',
+    thingsToRemember: '',
+    locationId: 0,
+    special_message: '',
+    location: {
+      locationId: 0,
+      locationName: ''
+    },
+    jobRoles: [],
+    jobDescs: [],
+    jobSlots: []
   };
+  applicationId: number | undefined;
+  application!: IApplicationRequest;
+  remainingDays: number = 99;
+  formData: FormData = new FormData();
+
   constructor(
     private http: HttpClient,
+    private router: Router,
     private dataService: DataService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
   emitData() {
-    this.dataService.sendData(this.applications);
+    console.log(this.application)
+    if (this.application.userId != 0 && this.application.resume != null && this.application.rolesid.at(0) != 0) {
+      this.http
+        .post<number>(`${baseurl}/apply`, this.application)
+        .pipe(
+          catchError((error) => {
+            console.error('There was a problem with the apply operation:', error);
+            return throwError(error);
+          })
+        )
+        .subscribe((data) => {
+          console.log(data);
+          this.router.navigate([`/jobs/${this.jobid}/application/${data}`])
+        });
+    }
   }
   fetchData(jobid: number): void {
     this.http
-      .get<IJobData[]>('/assets/JobDataJson.json')
+      .get<IJob>(`${baseurl}/job/${jobid}`)
       .pipe(
         catchError((error) => {
           console.error('There was a problem with the fetch operation:', error);
@@ -39,25 +70,35 @@ export class JobInfoComponent implements OnInit {
         })
       )
       .subscribe((data) => {
-        this.Jobs = data;
-        // console.log(data);
+        this.Job = data;
+        this.calculateRemainingDays();
       });
   }
   jobid: any;
-  // UploadApplicationData()
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      // id is not null, so it's safe to use
       this.jobid = +id;
-      this.applications.ApplicationJobId = this.jobid;
-      // Now use numericId as needed
+      this.application = {
+        resume: '',
+        jobId: this.jobid,
+        slotId: 0,
+        userId: 1,
+        rolesid: []
+      };
     } else {
       this.jobid = 1;
-      // Handle the case where 'id' is null
     }
     this.fetchData(this.jobid);
-    console.log(this.jobid);
+  }
+
+  calculateRemainingDays(): void {
+    const currentDate = new Date();
+    if (this.Job?.toTime) {
+      const toTime = new Date(this.Job.toTime);
+      const timeDifference = toTime.getTime() - currentDate.getTime();
+      this.remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24));
+    }
   }
 
   isNotExpanded = false;
@@ -73,17 +114,14 @@ export class JobInfoComponent implements OnInit {
     }
   }
 
-  toggleJobRole(role: string): void {
-    const index = this.selectedRoles.indexOf(role);
-    if (index !== -1) {
-      this.selectedRoles.splice(index, 1); // Remove role if already selected
-    } else {
-      this.selectedRoles.push(role); // Add role if not already selected
-    }
-    console.log('Selected job roles:', this.selectedRoles);
-    this.applications.selectedRoles = this.selectedRoles;
-    console.log('selected job roles:', this.applications.selectedRoles);
+  toggleJobRole(role: number): void {
+    this.application.rolesid.push(role);
   }
+
+  toggleSlot(slot: number) {
+    this.application.slotId = slot;
+  }
+
   formatdate(date: Date): string {
     const originalDate = new Date(date);
     const monthNames = [
@@ -104,24 +142,12 @@ export class JobInfoComponent implements OnInit {
     const month = monthNames[originalDate.getMonth()];
     const year = originalDate.getFullYear();
     const formattedDateString = `${day}-${month}-${year}`;
-    // console.log(formattedDateString);
     return formattedDateString;
   }
-  convertTo12HourFormat(time24: string) {
-    const [hours, minutes, seconds] = time24.split(':');
-
-    let period = 'AM';
-    let adjustedHours = parseInt(hours, 10);
-
-    if (adjustedHours >= 12) {
-      period = 'PM';
-      adjustedHours = adjustedHours > 12 ? adjustedHours - 12 : adjustedHours;
-    }
-
-    const time12 = `${adjustedHours
-      .toString()
-      .padStart(2, '0')}:${minutes} ${period}`;
-    return time12;
+  convertTo12HourFormat(time24: Time): string {
+    var timeString = time24.toString();
+    timeString = timeString.substring(0, 5);
+    return timeString;
   }
 
   input = document.querySelector('#resume-input');
@@ -130,7 +156,16 @@ export class JobInfoComponent implements OnInit {
 
   uploadResume(event: any): void {
     this.inputFile = event.target.files[0];
-    console.log(this.inputFile);
+
+    if (this.inputFile) {
+      const reader = new FileReader();
+      reader.onloadend = (e: any) => {
+        this.application.resume = e.target.result as string;
+      };
+      reader.readAsDataURL(this.inputFile);
+    }
+
     this.fileName = this.inputFile ? this.inputFile.name : '';
   }
+
 }

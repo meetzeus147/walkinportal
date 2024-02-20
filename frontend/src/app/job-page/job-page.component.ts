@@ -6,6 +6,8 @@ import { throwError } from 'rxjs';
 
 import { DataService } from 'src/app/shared/data.service';
 import { ApplicationService } from 'src/app/shared/application.service';
+import { IJob } from 'src/interface/interfaces';
+import { baseurl } from '../shared/url';
 
 @Component({
   selector: 'app-job-page',
@@ -13,8 +15,11 @@ import { ApplicationService } from 'src/app/shared/application.service';
   styleUrls: ['./SCSS/style.scss'],
 })
 export class JobPageComponent implements OnInit {
-  Job: IJobData[] = [];
+
+  Job: IJob[] = [];
   applicationArray: IApplicationInfo[] = [];
+  remainingDays: number = 99;
+
   constructor(
     private http: HttpClient,
     private dataService: DataService,
@@ -40,17 +45,28 @@ export class JobPageComponent implements OnInit {
 
   fetchData(): void {
     this.http
-      .get<IJobData[]>('/assets/JobDataJson.json')
+      .get<IJob[]>(`${baseurl}/jobs`)
       .pipe(
         catchError((error) => {
           console.error('There was a problem with the fetch operation:', error);
           return throwError(error);
         })
       )
-      .subscribe((data) => {
+      .subscribe( (data) => {
         this.Job = data;
+        this.calculateRemainingDays();
         // console.log(data);
       });
+  }
+
+  calculateRemainingDays(): void {
+    const currentDate = new Date();
+
+    this.Job.forEach((job) => {
+      const toTime = new Date(job.toTime);
+      const timeDifference = toTime.getTime() - currentDate.getTime();
+      this.remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24));
+    });
   }
 
   formatdate(date: Date): string {

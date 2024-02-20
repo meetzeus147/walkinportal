@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { jobRoles } from 'src/interface/interfaces';
 
 @Component({
   selector: 'app-roles-offered',
@@ -7,12 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RolesOfferedComponent implements OnInit {
 
+  @Input() role!: jobRoles;
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  @Input() role:any
 
   isNotExpanded = false;
 

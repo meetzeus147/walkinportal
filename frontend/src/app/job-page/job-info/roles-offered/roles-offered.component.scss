@@ -33,7 +33,6 @@ $fontsize24: 2.4rem;
     .expand-icon {
       margin-left: auto;
       padding: 0.8rem 0.6rem;
-      // height: auto;
       border-left: 0.1rem solid $seperatorcolor;
       display: flex;
 
@@ -54,12 +53,11 @@ $fontsize24: 2.4rem;
     .desc-title {
       font-size: $fontsize12;
       color: $labelcolor;
-      // margin-left: 1.6rem;
+      margin-top: 1.6rem;
+      margin-left: 1.6rem;
 
-      margin: 1.6rem 1.6rem;
       .desc {
         margin: 1.6rem 0;
-
         font-size: $fontsize14;
         color: $inputcolor;
       }

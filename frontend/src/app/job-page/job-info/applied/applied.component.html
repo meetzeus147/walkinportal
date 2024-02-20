@@ -7,24 +7,18 @@
     <div class="line-seperator"></div>
     <div class="date-time-div">
         Date & Time of Walk-In :
-        <!-- <div class="date">03rd July 2021</div> -->
-        <div class="date">03rd July 2021</div>
-        <div class="time">{{application.SelectedTimeSlots}}</div>
+        <div class="date">{{formatdate(application.job.date)}}</div>
+        <div class="time">{{convertTo12HourFormat(application.slot.fromTime)}} to {{convertTo12HourFormat(application.slot.toTime)}}</div>
     </div>
     <div class="line-seperator"></div>
     <div class="venue-div">
         Venue of Walk-In :
-        <div class="venue">Zeus Systems Pvt. Ltd.<br>
-            1402, 14th Floor, Tower B, Peninsula Business Park. Ganpatrao Kadam Marg<br>
-            Lower Parel (W) <br>
-            Mumbai - 400 013 <br>
-            Phone: +91-22-66600000</div>
+        <div class="venue">{{application.job.venue}}</div>
     </div>
     <div class="line-seperator"></div>
     <div class="things-to-remember-div">
         THINGS TO REMEMBER :
-        <div class="things-to-remember">- Please report 30 MINUTES prior to your reporting time.<br>- Download your Hall
-            Ticket from below and carry it with you during your Walk-In.</div>
+        <div class="things-to-remember">{{application.job.thingsToRemember}}</div>
     </div>
     <div class="line-seperator"></div>
     <button class="download-button">DOWNLOAD HALL TICKET</button>

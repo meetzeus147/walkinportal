@@ -50,7 +50,6 @@ export class PersonalInfoComponent implements OnInit {
   uploadResume(event: any): void {
     this.inputFile = event.target.files[0];
     if(this.inputFile){
-      this.personalInfo.Resume = this.inputFile;
       const blob = new Blob([this.inputFile],{type: this.inputFile.type});
 
       const reader = new FileReader();
