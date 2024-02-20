@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.Controllers
 {
@@ -42,10 +44,18 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/apply")]
-        public async Task<IActionResult> InsertApplication([FromBody] ApplicationRequest application)
+        public async Task<IActionResult> InsertApplicationAsync([FromBody] ApplicationRequest application)
         {
-            await _userService.InsertApplication(application);
-            return Ok();
+            Int32 applicationId = await _userService.InsertApplicationAsync(application);
+            return Ok(applicationId);
+        }
+
+        [HttpGet]
+        [Route("/getapplication/{applicationId}")]
+        public async Task<IActionResult> GetApplicationByIdAsync([FromRoute] int applicationId)
+        {
+            var application = _userService.GetApplicationByIdAsync(applicationId);
+            return Ok(application);
         }
 
         [HttpPost]
