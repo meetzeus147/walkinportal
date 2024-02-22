@@ -1,23 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-
-import {
-  userData,
-  Experienced,
-  Fresher,
-  Yesorno,
-  qualification,
-  College,
-  Steam,
-  JobRoles,
-  year,
-  ProfessionalQualification,
-} from './userRegistrationData';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RegistrationData, UserRegistrationRequest } from 'src/interface/interfaces';
+import { baseurl } from '../shared/url';
+import { catchError, throwError } from 'rxjs';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -25,225 +11,93 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class RegistrationComponent implements OnInit {
-  // show2: boolean = false;
   personalShow: boolean = true;
   qualificationShow: boolean = false;
   reviewShow: boolean = false;
-  userData: userData = {
-    PersonalInformation: {
-      FirstName: '',
-      LastName: '',
-      Email: '',
-      ProfilePhoto: null,
-      PhoneNumber: '',
-      PortfolioURL: '',
-      Referral: '',
-      sendemail: false,
-      countryCode: '',
-      Resume: null,
-      ResumeFileName: '',
-      PreferredJobRoles: []
-    },
-    Qualifications: {
-      EducationalQualifications: {
-        Percentage: 0,
-        YearOfPassing: year.val6,
-        Qualification: qualification.val1,
-        Stream: Steam.val1,
-        College: College.val1,
-        otherCollege: '',
-        collegeLocation: ''
-      },
-      ProfessionalQualifications: {
-        ApplicantType: '',
-        YearsOfExperience: 0,
-        CurrentCTC: '',
-        ExpectedCTC: '',
-        TechExpertized: [],
-        OtherTechExpertized: '',
-        TechFamiliar: [],
-        OtherTechFamiliar: '',
-        NoticePeriod: Yesorno.No,
-        NoticePeriodEndDate: new Date(),
-        AppearedIn: Yesorno.No,
-        RoleAppearedIn: ''
-      },
-    },
+  registrationData: RegistrationData = {
+    college: [],
+    location: [],
+    stream: [],
+    qualification: [],
+    tech: [],
+    role: [],
+    applicationTypes: []
   };
-  Freshers: Fresher = {
-    ApplicantType: '',
-    TechFamiliar: [],
-    OtherTechFamiliar: '',
-    AppearedIn: Yesorno.No,
-    RoleAppearedIn: ''
-  };
-  experience: Experienced = {
-    ApplicantType: '',
-    YearsOfExperience: 0,
-    CurrentCTC: '',
-    ExpectedCTC: '',
-    TechExpertized: [],
-    OtherTechExpertized: '',
-    TechFamiliar: [],
-    OtherTechFamiliar: '',
-    NoticePeriod: Yesorno.No,
-    NoticePeriodEndDate: new Date(),
-    AppearedIn: Yesorno.No,
-    RoleAppearedIn: ''
-  };
-
-  userDataArray: userData[] = [];
-
-  // initializeProfessionalQualifications(applicantType: string): void {
-  //   if (applicantType === 'Fresher') {
-  //     this.userData.Qualifications.ProfessionalQualifications = {
-  //       ...this.Freshers,
-  //     };
-  //   } else if (applicantType === 'Experienced') {
-  //     this.userData.Qualifications.ProfessionalQualifications = {
-  //       ...this.experience,
-  //     };
-  //   } else {
-  //     console.error('Invalid applicant type');
-  //   }
-  // }
-  updatePersonalInfo(personalInfo: any): void {
-    this.userData.PersonalInformation = personalInfo;
-    console.log(
-      'registration component ' +
-        this.userData.PersonalInformation.PreferredJobRoles
-    );
+  userData: UserRegistrationRequest = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNo: null,
+    portfolioUrl: '',
+    referalEmpName: '',
+    sendMeUpdate: null,
+    userId: 0,
+    countrycode: null,
+    resume: null,
+    profilePhoto: null,
+    percentage: null,
+    passingYear: null,
+    qualificationId: 0,
+    streamId: 0,
+    collegeId: 0,
+    expYear: null,
+    currentCtc: null,
+    expectedCtc: null,
+    currentlyOnNoticePeriod: null,
+    noticeEnd: null,
+    noticePeriodLength: null,
+    appearedZeusTest: null,
+    zeusTestRole: '',
+    applicationTypeId: 0,
+    expertTechsId: [],
+    familiarTechsId: [],
+    resumeFileName: '',
+    rolesId: [],
+    otherCollege: '',
+    otherExpertTechs: '',
+    otherFamiliarTechs: '',
+    otherCollegeLocation: ''
   }
-
-  updateEducationQualifications(eduQualifications: any): void {
-    this.userData.Qualifications.EducationalQualifications = eduQualifications;
-    console.log(
-      'registration component ' +
-        this.userData.Qualifications.EducationalQualifications.Percentage
-    );
+  nameRegex = /^[A-Z][a-zA-Z]{1,40}$/;
+  emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  countryCodeRegex = /^[0-9]{1,4}$/;
+  phonenoRegex = /^[1-9][0-9]{9}$/;
+  percentRegex = /^((100)|(\d{1,2}(.\d{1.2})?))$/;
+  expRegex = /^[0-9]{1,2}$/;
+  ctcRegex = /^[0-9]{4,8}$/;
+  Validations: any = {
+    firstNameInalid: false,
+    lastNameInalid: false,
+    emailInalid: false,
+    countroCodeInvalid: false,
+    phonenoInvalid: false,
+    resumeRequired: false,
+    rolesRequired: false,
+    percentInvalid: false,
+    passingYearRequired: false,
+    qualificationRequired: false,
+    streamRequired: false,
+    collegeRequired: false,
+    locationRequired: false,
+    applicationTypeRequired: false,
+    expInvalid: false,
+    currentCtcInvalid: false,
+    expectedCtcInvalid: false,
+    expertTechRequired: false,
+    currentlyOnNoticeRequired: false,
+    noticePeriodEndRequired: false,
+    givenZeusTestRequired: false,
   }
-  // updateProfessionalQualifications(profQualifications: any): void {
-  //   let profQual = this.userData.Qualifications.ProfessionalQualifications;
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
-  //   console.log('Applicant Type:', profQual.ApplicantType);
-
-  //   if (profQualifications.ApplicantType === 'Fresher') {
-  //     profQual = {
-  //       ...this.Freshers,
-  //     };
-  //   } else if (profQualifications.ApplicantType === 'Experienced') {
-  //     console.log('Updating for Experienced');
-  //     console.log('Experience:', this.experience);
-  //     // Assign properties only if they are defined
-  //     if (this.experience) {
-  //       profQual = {
-  //         ...this.experience,
-  //       };
-  //     }
-  //   }
-  //   profQual = profQualifications;
-
-  //   // Console log for debugging (comment out in production)
-  //   console.log(
-  //     'in regestration component Professional Qualifications:',
-  //     profQual
-  //   );
-  // }
-  updateProfessionalQualifications(profQualifications: any): void {
-    if (!profQualifications) {
-      console.error('Professional qualifications data is missing');
-      return;
-    }
-    this.userData.Qualifications.ProfessionalQualifications =
-      profQualifications;
-    const profQual = console.log(
-      this.userData.Qualifications.ProfessionalQualifications.ApplicantType
-    );
-    // Check the applicant type and access properties accordingly
-    if (
-      this.userData.Qualifications.ProfessionalQualifications.ApplicantType ===
-      'Fresher'
-    ) {
-      // Handle Fresher type
-      const fresherQualifications = this.userData.Qualifications
-        .ProfessionalQualifications as Fresher;
-      fresherQualifications.TechFamiliar = profQualifications.TechFamiliar;
-      fresherQualifications.OtherTechFamiliar =
-        profQualifications.OtherTechFamiliar;
-      fresherQualifications.AppearedIn = profQualifications.AppearedIn;
-      fresherQualifications.RoleAppearedIn = profQualifications.RoleAppearedIn;
-    } else if (
-      this.userData.Qualifications.ProfessionalQualifications.ApplicantType ===
-      'Experienced'
-    ) {
-      // Handle Experienced type
-      const experiencedQualifications = this.userData.Qualifications
-        .ProfessionalQualifications as Experienced;
-      experiencedQualifications.YearsOfExperience =
-        profQualifications.YearsOfExperience;
-      experiencedQualifications.CurrentCTC = profQualifications.CurrentCTC;
-      experiencedQualifications.ExpectedCTC = profQualifications.ExpectedCTC;
-      experiencedQualifications.TechExpertized =
-        profQualifications.TechExpertized;
-      experiencedQualifications.OtherTechExpertized =
-        profQualifications.OtherTechExpertized;
-      experiencedQualifications.NoticePeriod = profQualifications.NoticePeriod;
-      experiencedQualifications.NoticePeriodEndDate =
-        profQualifications.NoticePeriodEndDate;
-      experiencedQualifications.AppearedIn = profQualifications.AppearedIn;
-      experiencedQualifications.RoleAppearedIn =
-        profQualifications.RoleAppearedIn;
-    } else {
-      console.error('Invalid applicant type');
-      return;
-    }
-
-    // Console log for debugging (comment out in production)
-    console.log(
-      'in registration component Professional Qualifications:',
-      this.userData.Qualifications.ProfessionalQualifications
-    );
+  updateUserData(userData: UserRegistrationRequest): void {
+    this.userData = userData;
   }
-
-  saveUserData(): void {
-    this.userDataArray.push({ ...this.userData });
-    // Reset userData object for next entry
-    this.userData = {
-      PersonalInformation: {
-        FirstName: '',
-        LastName: '',
-        Email: '',
-        ProfilePhoto: null,
-        PhoneNumber: '',
-        PortfolioURL: '',
-        Referral: '',
-        sendemail: false,
-        countryCode: '',
-        Resume: null,
-        ResumeFileName: '',
-        PreferredJobRoles: [],
-      },
-      Qualifications: {
-        EducationalQualifications: {
-          Percentage: 0,
-          YearOfPassing: year.val6,
-          Qualification: qualification.val1,
-          Stream: Steam.val1,
-          College: College.val1,
-          otherCollege: '',
-          collegeLocation: '',
-        },
-        ProfessionalQualifications: {
-          ApplicantType: '',
-        } as ProfessionalQualification,
-      },
-    };
-  }
-  constructor() {}
 
   previous(): void {
-    // const personalinfo = document.querySelector('.step1');
-    // const qualifications = document.querySelector('.step2');
     if (!this.qualificationShow && this.reviewShow) {
       this.personalShow = false;
       this.qualificationShow = true;
@@ -255,19 +109,186 @@ export class RegistrationComponent implements OnInit {
     }
   }
   next(): void {
-    // const personalinfo = document.querySelector('.step1');
-    // const qualifications = document.querySelector('.step2');
     if (!this.qualificationShow && this.personalShow) {
-      this.personalShow = false;
-      this.qualificationShow = true;
-      this.reviewShow = false;
+      if (this.nameRegex.test(this.userData.firstName)) {
+        this.Validations.firstNameInalid = false;
+      }
+      else {
+        this.Validations.firstNameInalid = true;
+      }
+      if (this.nameRegex.test(this.userData.lastName)) {
+        this.Validations.lastNameInalid = false;
+      }
+      else {
+        this.Validations.lastNameInalid = true;
+      }
+      if (this.emailRegex.test(this.userData.email)) {
+        this.Validations.emailInalid = false;
+      }
+      else {
+        this.Validations.emailInalid = true;
+      }
+      if (this.userData.countrycode !== null) {
+        const countryCodeString: string = this.userData.countrycode.toString();
+        if (this.countryCodeRegex.test(countryCodeString)) {
+          this.Validations.countroCodeInvalid = false;
+        } else {
+          this.Validations.countroCodeInvalid = true;
+        }
+      } else {
+        this.Validations.countroCodeInvalid = true;
+      }
+      if (this.userData.phoneNo !== null) {
+        const String: string = this.userData.phoneNo.toString();
+        if (this.phonenoRegex.test(String)) {
+          this.Validations.phonenoInvalid = false;
+        } else {
+          this.Validations.phonenoInvalid = true;
+        }
+      } else {
+        this.Validations.phonenoInvalid = true;
+      }
+      if (this.userData.resume !== null || this.userData.resume === '') {
+        this.Validations.resumeRequired = false;
+      }
+      else {
+        this.Validations.resumeRequired = true;
+      }
+      if (this.userData.rolesId.length > 0) {
+        this.Validations.rolesRequired = false;
+      }
+      else {
+        this.Validations.rolesRequired = true;
+      }
+      if (!this.Validations.firstNameInalid && !this.Validations.lastNameInalid && !this.Validations.emailInalid && !this.Validations.countroCodeInvalid && !this.Validations.phonenoInvalid && !this.Validations.resumeRequired && !this.Validations.rolesRequired) {
+        this.personalShow = false;
+        this.qualificationShow = true;
+        this.reviewShow = false;
+      }
     } else if (!this.reviewShow && this.qualificationShow) {
-      this.personalShow = false;
-      this.qualificationShow = false;
-      this.reviewShow = true;
+      if (this.userData.percentage !== null) {
+        const String: string = this.userData.percentage.toString();
+        if (this.countryCodeRegex.test(String)) {
+          this.Validations.percentInvalid = false;
+        } else {
+          this.Validations.percentInvalid = true;
+        }
+      } else {
+        this.Validations.percentInvalid = true;
+      }
+      if (this.userData.passingYear) {
+        this.Validations.passingYearRequired = false;
+      }
+      else {
+        this.Validations.passingYearRequired = true;
+      }
+      if (this.userData.qualificationId != 0) {
+        this.Validations.qualificationRequired = false;
+      }
+      else {
+        this.Validations.qualificationRequired = true;
+      }
+      if (this.userData.streamId != 0) {
+        this.Validations.streamRequired = false;
+      }
+      else {
+        this.Validations.streamRequired = true;
+      }
+      if (this.userData.collegeId != 0) {
+        this.Validations.collegeRequired = false;
+      }
+      else {
+        this.Validations.collegeRequired = true;
+      }
+      if (this.nameRegex.test(this.userData.otherCollegeLocation)) {
+        this.Validations.locationRequired = false;
+      }
+      else {
+        this.Validations.locationRequired = true;
+      }
+      if (this.userData.applicationTypeId != 0) {
+        this.Validations.applicationTypeRequired = false;
+        if (this.userData.expYear !== null) {
+          const String: string = this.userData.expYear.toString();
+          if (this.expRegex.test(String)) {
+            this.Validations.expInvalid = false;
+          } else {
+            this.Validations.expInvalid = true;
+          }
+        } else {
+          this.Validations.expInvalid = true;
+        }
+        if (this.userData.currentCtc !== null) {
+          const String: string = this.userData.currentCtc.toString();
+          if (this.ctcRegex.test(String)) {
+            this.Validations.currentCtcInvalid = false;
+          } else {
+            this.Validations.currentCtcInvalid = true;
+          }
+        } else {
+          this.Validations.currentCtcInvalid = true;
+        }
+        if (this.userData.expectedCtc !== null) {
+          const String: string = this.userData.expectedCtc.toString();
+          if (this.ctcRegex.test(String)) {
+            this.Validations.expectedCtcInvalid = false;
+          } else {
+            this.Validations.expectedCtcInvalid = true;
+          }
+        } else {
+          this.Validations.expectedCtcInvalid = true;
+        }
+        if (this.userData.expertTechsId.length > 0) {
+          this.Validations.expertTechRequired = false;
+        }
+        else {
+          this.Validations.expertTechRequired = true;
+        }
+        if (this.userData.currentlyOnNoticePeriod !== null) {
+          this.Validations.currentlyOnNoticeRequired = false;
+          if (this.userData.noticeEnd !== null) {
+            this.Validations.noticePeriodEndRequired = false;
+          }
+          else {
+            this.Validations.noticePeriodEndRequired = true;
+          }
+        }
+        else {
+          this.Validations.currentlyOnNoticeRequired = true;
+        }
+      }
+      else {
+        this.Validations.applicationTypeRequired = true;
+      }
+      if (this.userData.appearedZeusTest !== null) {
+        this.Validations.givenZeusTestRequired = false;
+      }
+      else {
+        this.Validations.givenZeusTestRequired = true;
+      }
+      if (!this.Validations.percentInvalid && !this.Validations.passingYearRequired && !this.Validations.qualificationRequired && !this.Validations.streamRequired && !this.Validations.collegeRequired && !this.Validations.locationRequired && (this.userData.applicationTypeId == 1 || (this.userData.applicationTypeId == 2 && !this.Validations.expInvalid && !this.Validations.currentCtcInvalid && !this.Validations.expectedCtcInvalid && !this.Validations.expertTechRequired && !this.Validations.currentlyOnNoticeRequired && !this.Validations.noticePeriodEndRequired && !this.Validations.givenZeusTestRequired))) {
+        this.personalShow = false;
+        this.qualificationShow = false;
+        this.reviewShow = true;
+      }
     }
   }
+
+  fetchData() {
+    this.http
+      .get<RegistrationData>(`${baseurl}/getregistrationdata`)
+      .pipe(
+        catchError((error) => {
+          console.error('There was a problem with the fetch operation:', error);
+          return throwError(error);
+        })
+      )
+      .subscribe((data) => {
+        this.registrationData = data;
+      });
+  }
+
   ngOnInit(): void {
-    console.log(this.userData);
+    this.fetchData();
   }
 }

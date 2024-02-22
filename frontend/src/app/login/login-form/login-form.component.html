@@ -1,28 +1,3 @@
-<!-- <div class="main">
-    <form>
-        <div class="form-title">
-            <div class="title">Log In</div>
-        </div>
-        <div class="username-div">
-            <input type="text" class="username-password-input input-underline" name="Username" id="username"
-                placeholder="Email ID*">
-            <div class="forgot-labels">FORGOT Email ID?</div>
-        </div>
-        <div class="password-div">
-            <div class="input-underline password-flex">
-                <input type="password" class="state-input" name="State" id="password" placeholder="Password*">
-                <img src="../../assets/svgs/preview.svg" alt="preview">
-            </div>
-            <div class="forgot-labels">FORGOT PASSWORD?</div>
-        </div>
-        <div class="rememberme-div">
-            <input type="checkbox" name="RememberMe" id="rememberme" class="input-icon">
-            <label for="rememberme">Remember Me</label>
-        </div>
-        <div class="submit">LOG IN</div>
-    </form>
-</div> -->
-
 <div class="login-container">
     <div class="blueline"></div>
     <div class="content">
@@ -31,6 +6,8 @@
         </div>
         <form method="post">
             <div class="inputContainer1">
+                <div *ngIf="emailRequired" class="error">Email ID is required.</div>
+                <div *ngIf="emailInalid" class="error">Enter a valid email address.</div>
                 <input type="text" required="" class="customInput u1" name="username" placeholder="Email ID*"
                     [(ngModel)]="loginData.username" />
 
@@ -39,8 +16,8 @@
             <a href="#" class="forgot">FORGOT email id?</a>
 
             <div class="inputContainer2">
+                <div *ngIf="passwordRequired" class="error">Password is required.</div>
                 <div class="passwordWrapper">
-
                     <input type="{{ passwordFieldType }}" required class="customInput u1" name="password"
                         id="passwordField" placeholder="Password*" [(ngModel)]="loginData.password" />
 
@@ -64,7 +41,7 @@
         </form>
     </div>
     <div class="button-div">
-        <button class="submit" type="submit" routerLink="/jobs" (click)="login()">
+        <button class="submit" type="submit" (click)="login()">
             <span class="btn-text">
 
                 LOG IN

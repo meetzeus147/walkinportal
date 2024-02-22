@@ -1,5 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserRegistrationRequest } from 'src/interface/interfaces';
+import { userData } from '../userRegistrationData';
+import { baseurl } from 'src/app/shared/url';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-create-account-bar',
@@ -7,8 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./SCSS/style.scss'],
 })
 export class CreateAccountBarComponent implements OnInit {
-  @Input() createshow: boolean = false; // Input property to track review show status
-  constructor(private router: Router) {}
+  @Input() createshow: boolean = false;
+  @Input() userData!: UserRegistrationRequest;
+  
+  constructor(private router: Router,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {}
 
@@ -19,6 +28,16 @@ export class CreateAccountBarComponent implements OnInit {
       : 'create-account-button create-button inactive';
   }
   onCreateClick() {
-    if (this.createshow) this.router.navigate(['/login']);
+    this.http
+      .post(`${baseurl}/user`, this.userData)
+      .pipe(
+        catchError((error) => {
+          console.error('There was a problem with the fetch operation:', error);
+          return throwError(error);
+        })
+      )
+      .subscribe((data) => {
+        if (this.createshow) this.router.navigate(['/login']);
+      });
   }
 }

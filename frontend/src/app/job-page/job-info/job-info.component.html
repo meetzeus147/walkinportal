@@ -52,6 +52,7 @@
     <div class="preference-div">
         <div class="preference-title">Time Slots & Preferences</div>
         <div class="time-slots-div">
+            <div *ngIf="slotRequired" class="error">Select a time slot</div>
             Select a Time Slot :
             <div class="slot" *ngFor="let slot of Job.jobSlots;let i = index">
                 <input type="radio" class="slot-input" id="slot"
@@ -64,6 +65,7 @@
         </div>
         <div class="line-seperator"></div>
         <div class="roles-div" *ngIf="Job.jobRoles">
+            <div *ngIf="rolesRequired" class="error">Select role preferrence</div>
             Select Your Preference :
             <div class="role" *ngFor="let role of Job.jobRoles">
                 <input type="checkbox" name="roles" id="role" class="role-input"

@@ -8,7 +8,6 @@
     align-items: center;
     margin-top: 2rem;
     justify-content: center;
-    height: 3rem;
     .heading_box {
       @include fontstyle($mainfont, 2.4rem, 300, #222222, 1);
       letter-spacing: 0rem;
@@ -22,7 +21,6 @@
   .customInput {
     padding-bottom: 0.5rem;
     width: 100%;
-    height: 2rem;
     @include fontstyle($mainfont, 1.6rem, 400, #222222, 1);
     margin-left: 0;
     background-color: transparent;
@@ -52,11 +50,12 @@
   }
 
   .inputContainer1 {
-    height: 2.5rem;
     margin-top: 3.2rem;
     position: relative;
+    .error{
+      color: red;
+    }
     .u1 {
-      // font-weight: 500;
       margin-bottom: 0.5rem;
     }
   }
@@ -68,7 +67,6 @@
     letter-spacing: 0rem;
     text-decoration: none;
     text-transform: uppercase;
-    height: 1.8rem;
     justify-self: end;
   }
 
@@ -76,7 +74,6 @@
     @include fontstyle($mainfont, 1.6rem, 500, #222222, 1);
     display: flex;
     margin-top: 2.4rem;
-    height: 2.4rem;
     align-items: center;
     text-align: left;
     letter-spacing: 0rem;
@@ -84,7 +81,6 @@
   }
 
   .inputContainer2 {
-    height: 2.5rem;
     margin-top: 3.3rem;
     position: relative;
   }
@@ -95,25 +91,23 @@
     cursor: pointer;
     align-items: center;
     float: right;
-    // width: 2.2rem;
-    // height: 1.5rem;
     padding: 0rem;
     margin: 0;
     @media (max-width: 400px) {
-      // Adjust styles for smaller screens
-      float: none; // Remove float
-      // margin-top: 1rem; // Example adjustment
+      float: none;
     }
+  }
+
+  .error{
+    color: red;
   }
 
   .passwordWrapper {
     display: flex;
-    // flex-grow: 1;
   }
 
   .showPassword {
     width: 2.2rem;
-    height: 2rem;
   }
 
   .rem-check {

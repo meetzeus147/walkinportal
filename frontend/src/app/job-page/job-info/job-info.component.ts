@@ -14,7 +14,8 @@ import { Time } from '@angular/common';
   styleUrls: ['./job-info.component.scss'],
 })
 export class JobInfoComponent implements OnInit {
-
+  slotRequired: boolean = false;
+  rolesRequired: boolean = false;
   Job: IJob = {
     jobId: 0,
     jobName: '',
@@ -33,19 +34,26 @@ export class JobInfoComponent implements OnInit {
     jobSlots: []
   };
   applicationId: number | undefined;
-  application!: IApplicationRequest;
+  application: IApplicationRequest = {
+    resume: null,
+    userId: 0,
+    jobId: 0,
+    slotId: 0,
+    rolesid: []
+  };
   remainingDays: number = 99;
   formData: FormData = new FormData();
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dataService: DataService,
     private route: ActivatedRoute
   ) { }
   emitData() {
-    console.log(this.application)
-    if (this.application.userId != 0 && this.application.resume != null && this.application.rolesid.at(0) != 0) {
+    this.slotRequired = this.application.slotId !== 0 ? false : true;
+    this.rolesRequired = this.application.rolesid.length > 0 ? false : true;
+
+    if (!this.slotRequired && !this.rolesRequired) {
       this.http
         .post<number>(`${baseurl}/apply`, this.application)
         .pipe(
