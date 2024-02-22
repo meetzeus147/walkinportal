@@ -231,6 +231,14 @@ namespace backend.Models
                     .HasColumnName("dt_modified")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                entity.Property(e => e.OtherCollege)
+                    .HasMaxLength(255)
+                    .HasColumnName("other_college");
+
+                entity.Property(e => e.OtherCollegeLocation)
+                    .HasMaxLength(45)
+                    .HasColumnName("other_college_location");
+
                 entity.Property(e => e.PassingYear)
                     .HasColumnType("year")
                     .HasColumnName("passing_year");
@@ -546,6 +554,14 @@ namespace backend.Models
                     .HasColumnName("notice_end");
 
                 entity.Property(e => e.NoticePeriodLength).HasColumnName("notice_period_length");
+
+                entity.Property(e => e.OtherExpertTechs)
+                    .HasMaxLength(255)
+                    .HasColumnName("other_expert_techs");
+
+                entity.Property(e => e.OtherFamiliarTechs)
+                    .HasMaxLength(255)
+                    .HasColumnName("other_familiar_techs");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 

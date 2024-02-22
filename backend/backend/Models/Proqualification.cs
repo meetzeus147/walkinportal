@@ -22,6 +22,8 @@ namespace backend.Models
         public string ZeusTestRole { get; set; }
         public int ApplicationTypeId { get; set; }
         public int UserId { get; set; }
+        public string OtherExpertTechs { get; set; }
+        public string OtherFamiliarTechs { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 

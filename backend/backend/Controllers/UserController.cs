@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using System.Reflection.Metadata.Ecma335;
 
 namespace backend.Controllers
 {
@@ -22,6 +23,33 @@ namespace backend.Controllers
             _userService = userService;
             _context = context;
         }
+
+        [HttpGet]
+        [Route("/getregistrationdata")]
+        public async Task<IActionResult> getRegistrationDataAsync()
+        {
+            var collegesTask = await _context.Colleges.ToListAsync();
+            var streamsTask = await _context.Streams.ToListAsync();
+            var locationsTask = await _context.Locations.ToListAsync();
+            var techsTask = await _context.Techs.ToListAsync();
+            var qualificationsTask = await _context.Qualifications.ToListAsync();
+            var rolesTask = await _context.Roles.ToListAsync();
+            var applicationTypesTask = await _context.ApplicationTypes.ToListAsync();
+
+
+            var registrationData = new RegistrationData
+            {
+                college = collegesTask,
+                location = locationsTask,
+                stream = streamsTask,
+                qualification = qualificationsTask,
+                tech = techsTask,
+                role = rolesTask,
+                applicationTypes = applicationTypesTask
+            };
+            return Ok(registrationData);
+        }
+
         [HttpGet]
         [Route("/jobs")]
         public async Task<IActionResult> GetAllJobsAsync()
@@ -62,44 +90,7 @@ namespace backend.Controllers
         [Route("/user")]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequest userRegistrationRequest)
         {
-            await Console.Out.WriteLineAsync($"Email: {userRegistrationRequest.Email}");
-            await Console.Out.WriteLineAsync($"FirstName: {userRegistrationRequest.FirstName}");
-            await Console.Out.WriteLineAsync($"LastName: {userRegistrationRequest.LastName}");
-            await Console.Out.WriteLineAsync($"PhoneNo: {userRegistrationRequest.PhoneNo}");
-            await Console.Out.WriteLineAsync($"PortfolioUrl: {userRegistrationRequest.PortfolioUrl}");
-            await Console.Out.WriteLineAsync($"ReferalEmpName: {userRegistrationRequest.ReferalEmpName}");
-            await Console.Out.WriteLineAsync($"SendMeUpdate: {userRegistrationRequest.SendMeUpdate}");
-            await Console.Out.WriteLineAsync($"UserId: {userRegistrationRequest.UserId}");
-            await Console.Out.WriteLineAsync($"Countrycode: {userRegistrationRequest.Countrycode}");
-            await Console.Out.WriteLineAsync($"Resume: {userRegistrationRequest.Resume}");
-            await Console.Out.WriteLineAsync($"ProfilePhoto: {userRegistrationRequest.ProfilePhoto}");
-            await Console.Out.WriteLineAsync($"Percentage: {userRegistrationRequest.Percentage}");
-            await Console.Out.WriteLineAsync($"PassingYear: {userRegistrationRequest.PassingYear}");
-            await Console.Out.WriteLineAsync($"QualificationId: {userRegistrationRequest.QualificationId}");
-            await Console.Out.WriteLineAsync($"StreamId: {userRegistrationRequest.StreamId}");
-            await Console.Out.WriteLineAsync($"CollegeId: {userRegistrationRequest.CollegeId}");
-            await Console.Out.WriteLineAsync($"ExpYear: {userRegistrationRequest.ExpYear}");
-            await Console.Out.WriteLineAsync($"CurrentCtc: {userRegistrationRequest.CurrentCtc}");
-            await Console.Out.WriteLineAsync($"ExpectedCtc: {userRegistrationRequest.ExpectedCtc}");
-            await Console.Out.WriteLineAsync($"CurrentlyOnNoticePeriod: {userRegistrationRequest.CurrentlyOnNoticePeriod}");
-            await Console.Out.WriteLineAsync($"NoticeEnd: {userRegistrationRequest.NoticeEnd}");
-            await Console.Out.WriteLineAsync($"NoticePeriodLength: {userRegistrationRequest.NoticePeriodLength}");
-            await Console.Out.WriteLineAsync($"AppearedZeusTest: {userRegistrationRequest.AppearedZeusTest}");
-            await Console.Out.WriteLineAsync($"ZeusTestRole: {userRegistrationRequest.ZeusTestRole}");
-            await Console.Out.WriteLineAsync($"ApplicationTypeId: {userRegistrationRequest.ApplicationTypeId}");
-
-            await Console.Out.WriteLineAsync("ExpertTechsId:");
-            foreach (var techId in userRegistrationRequest.ExpertTechsId)
-            {
-                await Console.Out.WriteLineAsync($"  - {techId}");
-            }
-
-            Console.Out.WriteLine("FamiliarTechsId:");
-            foreach (var techId in userRegistrationRequest.FamiliarTechsId)
-            {
-                await Console.Out.WriteLineAsync($"  - {techId}");
-            }
-
+            await _userService.RegisterUser(userRegistrationRequest);
             return Ok();
         }
 

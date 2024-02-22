@@ -12,6 +12,8 @@ namespace backend.Models
         public int StreamId { get; set; }
         public int CollegeId { get; set; }
         public int UserId { get; set; }
+        public string OtherCollege { get; set; }
+        public string OtherCollegeLocation { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 

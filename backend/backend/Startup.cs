@@ -41,6 +41,7 @@ namespace backend
             services.AddDbContext<walkinportalContext>(options => 
                 options.UseMySQL(connectionString)
             );
+            services.AddTransient<walkinportalContext>();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>

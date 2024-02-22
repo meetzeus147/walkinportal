@@ -203,8 +203,96 @@ namespace backend.Services
 
         public async Task<Application> GetApplicationByIdAsync(int applicationId)
         {
-            var application = _context.Applications.Where(a => a.ApplicationId == applicationId).Include(a => a.Job).Include(a => a.Slot).AsSplitQuery().FirstOrDefault();
+            var application = await _context.Applications.Where(a => a.ApplicationId == applicationId).Include(a => a.Job).Include(a => a.Slot).AsSplitQuery().FirstOrDefaultAsync();
             return application;
+        }
+
+        public async Task RegisterUser(UserRegistrationRequest userRegistrationRequest)
+        {
+            User user = new User
+            {
+                Email = userRegistrationRequest.Email,
+                Password = userRegistrationRequest.FirstName + "" + userRegistrationRequest.PassingYear,
+            };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            Userasset userasset = new Userasset
+            {
+                UserId = user.UserId,
+                Resume = userRegistrationRequest.Resume,
+                ProfilePhoto = userRegistrationRequest.ProfilePhoto
+            };
+            _context.Userassets.Add(userasset);
+            await _context.SaveChangesAsync();
+
+            Userdetail userdetail = new Userdetail
+            {
+                UserId = user.UserId,
+                FirstName = userRegistrationRequest.FirstName,
+                LastName = userRegistrationRequest.LastName,
+                PhoneNo = userRegistrationRequest.PhoneNo,
+                Countrycode = userRegistrationRequest.Countrycode,
+                PortfolioUrl = userRegistrationRequest.PortfolioUrl,
+                ReferalEmpName = userRegistrationRequest.ReferalEmpName,
+                SendMeUpdate = userRegistrationRequest.SendMeUpdate,
+            };
+            _context.Userdetails.Add(userdetail);
+            await _context.SaveChangesAsync();
+
+            Edqualification edqualification = new Edqualification
+            {
+                UserId = user.UserId,
+                Percentage = userRegistrationRequest.Percentage,
+                PassingYear = userRegistrationRequest.PassingYear,
+                QualificationId = userRegistrationRequest.QualificationId,
+                StreamId = userRegistrationRequest.StreamId,
+                CollegeId = userRegistrationRequest.CollegeId,
+                OtherCollege = userRegistrationRequest.OtherCollege,
+                OtherCollegeLocation = userRegistrationRequest.OtherCollegeLocations
+            };
+            _context.Edqualifications.Add(edqualification);
+            await _context.SaveChangesAsync();
+
+            Proqualification proqualification = new Proqualification
+            {
+                UserId = user.UserId,
+                ExpYear = userRegistrationRequest.ExpYear,
+                CurrentCtc = userRegistrationRequest.CurrentCtc,
+                ExpectedCtc = userRegistrationRequest.ExpectedCtc,
+                CurrentlyOnNoticePeriod = userRegistrationRequest.CurrentlyOnNoticePeriod,
+                NoticeEnd = userRegistrationRequest.NoticeEnd,
+                NoticePeriodLength = userRegistrationRequest.NoticePeriodLength,
+                AppearedZeusTest = userRegistrationRequest.AppearedZeusTest,
+                ZeusTestRole = userRegistrationRequest.ZeusTestRole,
+                ApplicationTypeId = userRegistrationRequest.ApplicationTypeId,
+                OtherExpertTechs = userRegistrationRequest.OtherExpertTechs,
+                OtherFamiliarTechs = userRegistrationRequest.OtherFamiliarTechs
+            };
+            _context.Proqualifications.Add(proqualification);
+            await _context.SaveChangesAsync();
+
+            foreach (var expertTechId in userRegistrationRequest.ExpertTechsId)
+            {
+                ProqualificationExperttech proqualificationExperttech = new ProqualificationExperttech
+                {
+                    ProqualificationId = proqualification.ProqualificationId,
+                    TechId = expertTechId
+                };
+                _context.ProqualificationExperttechs.Add(proqualificationExperttech);
+            }
+            await _context.SaveChangesAsync();
+
+            foreach (var familiarTechId in userRegistrationRequest.FamiliarTechsId)
+            {
+                ProqualificationFamiliartech proqualificationFamiliartech = new ProqualificationFamiliartech
+                {
+                    ProqualificationId = proqualification.ProqualificationId,
+                    TechId = familiarTechId
+                };
+                _context.ProqualificationFamiliartechs.Add(proqualificationFamiliartech);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

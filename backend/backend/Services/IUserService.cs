@@ -13,5 +13,6 @@ namespace backend.Services
         public Task<Job> GetJobByIdAsync(int jobId);
         public Task<Int32> InsertApplicationAsync(ApplicationRequest application);
         public Task<Application> GetApplicationByIdAsync(int applicationId);
+        public Task RegisterUser(UserRegistrationRequest userRegistrationRequest);
     }
 }
