@@ -17,7 +17,7 @@ import { Time } from '@angular/common';
 })
 export class AppliedComponent implements OnInit {
 
-  application: IApplication ={
+  application: IApplication = {
     applicationId: 0,
     resume: '',
     userId: 0,
@@ -67,7 +67,6 @@ export class AppliedComponent implements OnInit {
       )
       .subscribe((data) => {
         this.application = data;
-        console.log(data);
       });
   }
   ngOnInit(): void {
@@ -109,4 +108,20 @@ export class AppliedComponent implements OnInit {
     timeString = timeString.substring(0, 5);
     return timeString;
   }
+
+  downloadHallTicket() {
+    if (this.application.hallticket) {
+      var uint8Array = Uint8Array.from(atob(this.application.hallticket), char => char.charCodeAt(0));
+      var pdfBlob = new Blob([uint8Array], { type: 'application/pdf' });
+      var blobUrl = URL.createObjectURL(pdfBlob);
+      var link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `hallticket_${this.application.applicationId}.pdf`;
+      link.click();
+      URL.revokeObjectURL(blobUrl);
+    } else {
+      console.error('Hallticket is empty');
+    }
+  }
+  
 }

@@ -82,7 +82,7 @@ namespace backend.Controllers
         [Route("/getapplication/{applicationId}")]
         public async Task<IActionResult> GetApplicationByIdAsync([FromRoute] int applicationId)
         {
-            var application = _userService.GetApplicationByIdAsync(applicationId);
+            var application = await _userService.GetApplicationByIdAsync(applicationId);
             return Ok(application);
         }
 

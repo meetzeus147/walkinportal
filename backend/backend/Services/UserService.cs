@@ -1,10 +1,16 @@
 ﻿using backend.Dtos;
 using backend.Models;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.StyledXmlParser.Jsoup.Nodes;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace backend.Services
@@ -180,24 +186,72 @@ namespace backend.Services
 
         public async Task<Int32> InsertApplicationAsync(ApplicationRequest application)
         {
-            Application app = new Application {
-                Resume = application.Resume,
-                UserId = application.UserId,
-                SlotId = application.SlotId,
-                JobId = application.JobId
-            };
-            _context.Applications.Add(app);
-            await _context.SaveChangesAsync();
-            foreach (var roleId in application.Rolesid)
+            var job = await _context.Jobs.Where(j => j.JobId == application.JobId).Include(j => j.Location).FirstOrDefaultAsync();
+            var user = await _context.Userdetails.Where(u => u.UserId == application.UserId).FirstOrDefaultAsync();
+
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                ApplicationRole appRole = new ApplicationRole {
-                    ApplicationId = app.ApplicationId,
-                    RoleId = roleId
-                };
-                _context.ApplicationRoles.Add(appRole);
+                using (PdfWriter writer = new(memoryStream))
+                {
+                    using (PdfDocument pdf = new(writer))
+                    {
+                        iText.Layout.Document document = new iText.Layout.Document(pdf);
+
+                        document.Add(new Paragraph($"Name: {user.FirstName} {user.LastName}"));
+
+                        document.Add(new Paragraph("Roles:"));
+                        foreach (var roleId in application.Rolesid)
+                        {
+                            var roleName = await _context.Roles.Where(r => r.RoleId == roleId).Select(r => r.RoleName).FirstOrDefaultAsync();
+
+                            document.Add(new Paragraph($"- {roleName}"));
+                        }
+
+                        document.Add(new Paragraph($"Job Name: {job.JobName}"));
+                        document.Add(new Paragraph($"Venue: {job.Venue}"));
+                        document.Add(new Paragraph($"From Time: {job.FromTime}"));
+                        document.Add(new Paragraph($"To Time: {job.ToTime}"));
+                        document.Add(new Paragraph($"Things To Remember: {job.ThingsToRemember}"));
+
+                        document.Close();
+
+                        byte[] pdfBytes = memoryStream.ToArray();
+
+                        string base64String = Convert.ToBase64String(pdfBytes);
+
+                        Application app = new Application();
+                        app.UserId = application.UserId;
+                        app.SlotId = application.SlotId;
+                        app.JobId = application.JobId;
+                        app.Hallticket = base64String;
+                        if (application.Resume.Length != 0)
+                        {
+                            app.Resume = application.Resume;
+                        }
+                        else
+                        {
+                            var userasset = await  _context.Userassets.Where(u => u.UserId == application.UserId).FirstOrDefaultAsync();
+                            app.Resume = userasset.Resume;
+                        }
+                        
+
+                        _context.Applications.Add(app);
+                        await _context.SaveChangesAsync();
+
+                        foreach (var roleId in application.Rolesid)
+                        {
+                            ApplicationRole appRole = new ApplicationRole
+                            {
+                                ApplicationId = app.ApplicationId,
+                                RoleId = roleId
+                            };
+                            _context.ApplicationRoles.Add(appRole);
+                        }
+                        await _context.SaveChangesAsync();
+                        return app.ApplicationId;
+                    }
+                }
             }
-            await _context.SaveChangesAsync();
-            return app.ApplicationId;
         }
 
 
