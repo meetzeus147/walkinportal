@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { baseurl } from 'src/app/shared/url';
+import { LoginResponse } from 'src/interface/interfaces';
 
 @Component({
   selector: 'app-login-form',
@@ -50,18 +51,28 @@ export class LoginFormComponent implements OnInit {
     }
 
     if (!this.emailInalid && !this.emailRequired && !this.passwordRequired) {
+      console.log(this.loginData)
       this.http
-        .post(`${baseurl}/login`, this.loginData)
+        .post<LoginResponse>(`${baseurl}/login`, this.loginData)
         .pipe(
           catchError((error) => {
+            alert("Invalid User");
             console.error('There was a problem with the fetch operation:', error);
             return throwError(error);
           })
         )
-        .subscribe((data) => {
+        .subscribe((data:LoginResponse) => {
+          
+
+          console.log(data)
+          this.setToken(data.token);
           this.router.navigate(['/jobs']);
         });
     }
+  }
+
+  setToken(token:string){
+    localStorage.setItem("access_token",token)
   }
 
   onRememberMeChange(event: Event): void {

@@ -4,13 +4,20 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.StyledXmlParser.Jsoup.Nodes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using sib_api_v3_sdk.Api;
+using sib_api_v3_sdk.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection.Metadata;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace backend.Services
@@ -18,9 +25,11 @@ namespace backend.Services
     public class UserService : IUserService
     {
         private readonly walkinportalContext _context;
+        private readonly IEmailService _emailService;
         public UserService(walkinportalContext context)
         {
             _context = context;
+            _emailService = new EmailService();
         }
         public async Task<List<Job>> GetAllJobsAsync()
         {
@@ -187,7 +196,8 @@ namespace backend.Services
         public async Task<Int32> InsertApplicationAsync(ApplicationRequest application)
         {
             var job = await _context.Jobs.Where(j => j.JobId == application.JobId).Include(j => j.Location).FirstOrDefaultAsync();
-            var user = await _context.Userdetails.Where(u => u.UserId == application.UserId).FirstOrDefaultAsync();
+            var userdetails = await _context.Userdetails.Where(u => u.UserId == application.UserId).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(u => u.UserId == application.UserId).FirstOrDefaultAsync();
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -197,7 +207,7 @@ namespace backend.Services
                     {
                         iText.Layout.Document document = new iText.Layout.Document(pdf);
 
-                        document.Add(new Paragraph($"Name: {user.FirstName} {user.LastName}"));
+                        document.Add(new Paragraph($"Name: {userdetails.FirstName} {userdetails.LastName}"));
 
                         document.Add(new Paragraph("Roles:"));
                         foreach (var roleId in application.Rolesid)
@@ -234,7 +244,6 @@ namespace backend.Services
                             app.Resume = userasset.Resume;
                         }
                         
-
                         _context.Applications.Add(app);
                         await _context.SaveChangesAsync();
 
@@ -248,12 +257,34 @@ namespace backend.Services
                             _context.ApplicationRoles.Add(appRole);
                         }
                         await _context.SaveChangesAsync();
+
+                        string jsonBody = $@"{{
+                            ""sender"": {{
+                                ""name"": ""Meet Dadhania"",
+                                ""email"": ""dadhaniameet1744@gmail.com""
+                            }},
+                            ""to"": [
+                                {{
+                                    ""email"": ""{user.Email}""
+                                }}
+                            ],
+                            ""templateId"": 6,
+                            ""params"": {{
+                                ""firstname"": ""{userdetails.FirstName}"",
+                                ""jobname"": ""{job.JobName}"",
+                                ""id"": ""{app.ApplicationId}"",
+                                ""location"": ""{job.Location.LocationName}"",
+                                ""address"": ""{job.Venue.Replace("\n", "\\n")}""
+                            }}
+                        }}";
+                        Console.WriteLine(jsonBody);
+                        await _emailService.SendTransactionalEmailAsync(jsonBody);
+
                         return app.ApplicationId;
                     }
                 }
             }
         }
-
 
         public async Task<Application> GetApplicationByIdAsync(int applicationId)
         {
@@ -261,7 +292,29 @@ namespace backend.Services
             return application;
         }
 
-        public async Task RegisterUser(UserRegistrationRequest userRegistrationRequest)
+        public async Task<LoginRequest> AuthenticateUser(string username, string password, bool RememberMe)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == username && u.Password == password);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            // Mapping User entity to UserDTO (you can use AutoMapper if preferred)
+            var userDto = new LoginRequest
+            {
+                username = user.Email,
+                password = user.Password,
+                rememberMe = RememberMe
+
+                // Add other properties as needed
+            };
+
+            return userDto;
+        }
+
+        public async System.Threading.Tasks.Task RegisterUser(UserRegistrationRequest userRegistrationRequest)
         {
             User user = new User
             {
@@ -270,6 +323,24 @@ namespace backend.Services
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
+            string jsonBody = $@"{{
+                ""sender"": {{
+                    ""name"": ""Meet Dadhania"",
+                    ""email"": ""dadhaniameet1744@gmail.com""
+                }},
+                ""to"": [
+                    {{
+                        ""email"": ""{userRegistrationRequest.Email}""
+                    }}
+                ],
+                ""templateId"": 5,
+                ""params"": {{
+                    ""firstname"": ""{userRegistrationRequest.FirstName}"",
+                    ""password"": ""{user.Password}""
+                }}
+            }}";
+            await _emailService.SendTransactionalEmailAsync(jsonBody);
 
             Userasset userasset = new Userasset
             {
@@ -347,6 +418,30 @@ namespace backend.Services
                 _context.ProqualificationFamiliartechs.Add(proqualificationFamiliartech);
             }
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<RegistrationData> getRegistrationDataAsync()
+        {
+            var collegesTask = await _context.Colleges.ToListAsync();
+            var streamsTask = await _context.Streams.ToListAsync();
+            var locationsTask = await _context.Locations.ToListAsync();
+            var techsTask = await _context.Techs.ToListAsync();
+            var qualificationsTask = await _context.Qualifications.ToListAsync();
+            var rolesTask = await _context.Roles.ToListAsync();
+            var applicationTypesTask = await _context.ApplicationTypes.ToListAsync();
+
+
+            var registrationData = new RegistrationData
+            {
+                college = collegesTask,
+                location = locationsTask,
+                stream = streamsTask,
+                qualification = qualificationsTask,
+                tech = techsTask,
+                role = rolesTask,
+                applicationTypes = applicationTypesTask
+            };
+            return registrationData;
         }
     }
 }

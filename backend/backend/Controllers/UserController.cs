@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using System.Reflection.Metadata.Ecma335;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -18,35 +23,19 @@ namespace backend.Controllers
     {
         private IUserService _userService;
         private readonly walkinportalContext _context;
-        public UserController(IUserService userService, walkinportalContext context)
+        private IConfiguration _configuration;
+        public UserController(IUserService userService, walkinportalContext context,IConfiguration configuration)
         {
             _userService = userService;
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpGet]
         [Route("/getregistrationdata")]
         public async Task<IActionResult> getRegistrationDataAsync()
         {
-            var collegesTask = await _context.Colleges.ToListAsync();
-            var streamsTask = await _context.Streams.ToListAsync();
-            var locationsTask = await _context.Locations.ToListAsync();
-            var techsTask = await _context.Techs.ToListAsync();
-            var qualificationsTask = await _context.Qualifications.ToListAsync();
-            var rolesTask = await _context.Roles.ToListAsync();
-            var applicationTypesTask = await _context.ApplicationTypes.ToListAsync();
-
-
-            var registrationData = new RegistrationData
-            {
-                college = collegesTask,
-                location = locationsTask,
-                stream = streamsTask,
-                qualification = qualificationsTask,
-                tech = techsTask,
-                role = rolesTask,
-                applicationTypes = applicationTypesTask
-            };
+            var registrationData = await _userService.getRegistrationDataAsync();
             return Ok(registrationData);
         }
 
@@ -92,6 +81,53 @@ namespace backend.Controllers
         {
             await _userService.RegisterUser(userRegistrationRequest);
             return Ok();
+        }
+
+        [HttpPost]
+
+        [Route("/login")]
+        public async Task<IActionResult> LoginAsync(LoginRequest loginRequest)
+        {
+            Console.WriteLine(loginRequest);
+            var user = await _userService.AuthenticateUser(loginRequest.username, loginRequest.password, loginRequest.rememberMe);
+            Console.WriteLine(user);
+            if (user == null)
+            {
+                // Unauthorized: Invalid username or password
+                return Unauthorized();
+            }
+
+            // If authentication is successful, return a JWT token
+            var token = GenerateJwtToken(user.username);
+            return Ok(new { Token = token });
+        }
+        private string GenerateJwtToken(string username)
+        {
+            // Convert userId to string
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwtConfig:key"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+                {
+        new Claim(ClaimTypes.Name, username),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    };
+
+            var tokenDescriptor = new JwtSecurityToken
+            (
+                _configuration["jwtConfig:Issuer"],
+                _configuration["jwtConfig:Audience"],
+                claims,
+                expires: DateTime.UtcNow.AddHours(10),
+                signingCredentials: signIn
+
+            //Subject = new ClaimsIdentity(claims),
+            //Expires = DateTime.UtcNow.AddHours(10), // Token expiration time
+            //SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
+            );
+
+            // var token = new JwtSecurityTokenHandler(tokenDescriptor);
+            return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
 
     }

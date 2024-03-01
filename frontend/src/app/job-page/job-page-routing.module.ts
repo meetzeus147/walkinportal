@@ -4,11 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { JobPageComponent } from './job-page.component';
 import { JobInfoComponent } from './job-info/job-info.component';
 import { AppliedComponent } from './job-info/applied/applied.component';
+import { AuthGuard } from '../shared/auth.guard';
 
 const routes: Routes = [
-  { path: 'jobs', component: JobPageComponent },
-  { path: 'jobs/:id', component: JobInfoComponent },
-  { path: 'jobs/:id/application/:applicationid', component: AppliedComponent },
+  { path: 'jobs', component: JobPageComponent,canActivate:[AuthGuard] },
+  { path: 'jobs/:id', component: JobInfoComponent,canActivate:[AuthGuard] },
+  { path: 'jobs/:id/application/:applicationid', component: AppliedComponent,canActivate:[AuthGuard] },
 ];
 
 @NgModule({

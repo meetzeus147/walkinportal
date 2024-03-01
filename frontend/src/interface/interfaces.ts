@@ -169,3 +169,7 @@ export interface UserRegistrationRequest {
     otherFamiliarTechs: string;
     rolesId: number[];
 }
+
+export interface LoginResponse {
+    token: string; 
+}
