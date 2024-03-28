@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { JobPageComponent } from './job-page/job-page.component';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
   { path: 'registration', pathMatch: 'full', redirectTo: '/registration' },
-  { path: 'jobs', pathMatch: 'full', redirectTo: '/jobs' },
-  // { path: '**', pathMatch: 'full', redirectTo: '/login' },
+  {path: 'jobs', component: JobPageComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

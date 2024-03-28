@@ -44,6 +44,9 @@ export class JobPageComponent implements OnInit {
   }
 
   fetchData(): void {
+    const jwttoken=localStorage.getItem("access_token");
+    
+    console.log(jwttoken);
     this.http
       .get<IJob[]>(`${baseurl}/jobs`)
       .pipe(

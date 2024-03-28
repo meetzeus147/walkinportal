@@ -86,19 +86,27 @@ export class JobInfoComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      this.jobid = +id;
-      this.application = {
-        resume: '',
-        jobId: this.jobid,
-        slotId: 0,
-        userId: 1,
-        rolesid: []
-      };
+        this.jobid = +id;
+        const userIdFromLocalStorage = localStorage.getItem('userId');
+
+        if (userIdFromLocalStorage !== null) {
+            this.application = {
+                resume: '',
+                jobId: this.jobid,
+                slotId: 0,
+                userId: +userIdFromLocalStorage,
+                rolesid: []
+            };
+        } else {
+            this.application.userId = 1;
+        }
     } else {
-      this.jobid = 1;
+        this.jobid = 1;
+        this.application.jobId = 1;
     }
     this.fetchData(this.jobid);
-  }
+}
+
 
   calculateRemainingDays(): void {
     const currentDate = new Date();

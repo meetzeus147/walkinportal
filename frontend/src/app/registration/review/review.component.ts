@@ -48,32 +48,33 @@ export class ReviewComponent implements OnInit {
   }
 
   getRoleName(roleId: number): string {
-    const role = this.registrationData.role.find(role => role.roleId === roleId);
+    const role = this.registrationData.role.find(role => role.roleId == roleId);
     return role ? role.roleName : 'Unknown Role';
   }
 
   getCollegeName(collegeId: number): string {
-    const college = this.registrationData.college.find(college => college.collegeId === collegeId);
+    console.log(this.registrationData)
+    const college = this.registrationData.college.find(college => college.collegeId == collegeId);
     return college ? college.collegeName : 'Unknown Role';
   }
 
   getStreamName(streamId: number): string {
-    const stream = this.registrationData.stream.find(stream => stream.streamId === streamId);
+    const stream = this.registrationData.stream.find(stream => stream.streamId == streamId);
     return stream ? stream.streamName : 'Unknown Role';
   }
 
   getTechName(techId: number): string {
-    const tech = this.registrationData.tech.find(tech => tech.techId === techId);
+    const tech = this.registrationData.tech.find(tech => tech.techId == techId);
     return tech ? tech.techName : 'Unknown Role';
   }
 
   getApplicationTypeName(id: number): string{
-    const applicationTypes = this.registrationData.applicationTypes.find(applicationTypes => applicationTypes.applicationTypeId === id);
+    const applicationTypes = this.registrationData.applicationTypes.find(applicationTypes => applicationTypes.applicationTypeId == id);
     return applicationTypes ? applicationTypes.applicationTypeName : 'Unknown Role';
   }
 
   getQualificationName(qualificationId: number): string{
-    const qualification = this.registrationData.qualification.find(qualification => qualification.qualificationId === qualificationId);
+    const qualification = this.registrationData.qualification.find(qualification => qualification.qualificationId == qualificationId);
     return qualification ? qualification.qualificationName : 'Unknown Role';
   }
 
